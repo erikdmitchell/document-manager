@@ -6,6 +6,7 @@ class Document_Manager_Admin {
 		add_action('admin_enqueue_scripts', array($this, 'scripts_styles'));
 		add_filter('wp_handle_upload_prefilter', array($this, 'modify_uploaded_file_names'), 1, 1);
 		add_action('wp_ajax_dm_metabox_upload_file', array($this, 'ajax_upload_file'));
+		add_action('wp_ajax_dm_reload_metabox', array($this, 'ajax_reload_metabox'));
 	}
 	
 	public function scripts_styles() {
@@ -95,6 +96,16 @@ class Document_Manager_Admin {
 	protected function add_file_meta($file_id=0, $post_id=0) {
 		add_post_meta($file_id, '_dm_document_timestamp', current_time('mysql')); // add timestamp
 		add_post_meta($file_id, '_dm_document_version_number', dm_get_file_version($post_id)); // add version
+	}
+	
+	public function ajax_reload_metabox() {
+		$metabox=$_POST['metabox'];
+		$mb=new $metabox();
+		$post=get_post($_POST['post_id']);
+		
+		echo $mb->render_metabox($post);
+		
+		wp_die();
 	}
 	
 }	

@@ -32,8 +32,10 @@ jQuery(document).ready(function($) {
 			success: function(data, textStatus, jqXHR) {
 				if (data.response == 'SUCCESS') {
 					// todo
+					reloadDocumentVersionMetaBox();
 				} else {
-					alert(data.error);
+					//alert(data.error);
+					reloadDocumentVersionMetaBox();
 				}
 				
 				hideLoader();		
@@ -42,6 +44,21 @@ jQuery(document).ready(function($) {
 	});
 	
 });
+
+function reloadDocumentVersionMetaBox() {
+	console.log('ajax reload metabox');
+	
+	var data={
+		'action': 'dm_reload_metabox',
+		'post_id': jQuery('#dm-metabox-post-id').val(),
+		'metabox': 'Document_Manager_Document_Versions_Meta_Box',	
+	};
+	
+	jQuery.post(ajaxurl, data, function(response) {
+		jQuery('#dm-document-versions .inside').html(''); // clear
+		jQuery('#dm-document-versions .inside').html(response); // add reloaded data
+	});
+}
 
 // create/display loader //
 function showLoader(self) {
