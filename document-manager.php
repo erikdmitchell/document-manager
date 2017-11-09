@@ -70,10 +70,15 @@ final class DocumentManager {
 	private function init_hooks() {
 		register_activation_hook(DM_PLUGIN_FILE, array('Document_Manager_Install', 'install'));
 		add_action('init', array($this, 'init'), 0);
+		add_action('wp_enqueue_scripts', array($this, 'scripts_styles'));
 	}
 
 	public function init() {
 
+	}
+	
+	public function scripts_styles() {
+		wp_enqueue_style('font-awesome', DM_URL.'css/font-awesome.min.css', '', '4.7.0');
 	}
 
 }

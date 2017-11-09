@@ -1,6 +1,6 @@
 <?php
 
-class Document_Manager_Document_Details_Meta_Box {
+class Document_Manager_Document_Versions_Meta_Box {
 
     public function __construct() {
         if (is_admin()) :
@@ -11,13 +11,13 @@ class Document_Manager_Document_Details_Meta_Box {
 
     public function init_metabox() {
         add_action('add_meta_boxes', array($this, 'add_metabox'));
-        add_action('save_post', array($this, 'save_metabox'), 10, 2);
+        add_action('save_post', array($this, 'save_metabox'), 10, 2); // may not need since this is auto generated
     }
 
     public function add_metabox() {
         add_meta_box(
-            'dm-document-details',
-            __('Document Details', 'document-manager'),
+            'dm-document-versions',
+            __('Versions', 'document-manager'),
             array( $this, 'render_metabox'),
             'document',
             'advanced',
@@ -28,18 +28,35 @@ class Document_Manager_Document_Details_Meta_Box {
 
     public function render_metabox($post) {
 	    $html='';
+	    $files=get_children(array(
+			'post_parent' => $post->ID,
+			'post_type' => 'attachment',
+			//'post_mime_type' => 'image',
+			'posts_per_page' => -1,
+			'orderby' => 'menu_order',
+			'order' => 'ASC',
+	    ));
 	    
-		$html.=wp_nonce_field('update_document_details', 'dm_meta_box', true, false);
+	    $html.='<div class="dm-meta-box-file-list">';
+	    
+	    	$html.='<div id="file-header" class="dm-meta-box-file header">';
+				$html.='<div class="file-name">Name</div>';
+				$html.='<div class="file-type">Type</div>';
+				$html.='<div class="file-size">Size</div>';
+				$html.='<div class="file-version">Version</div>';
+				$html.='<div class="file-action"></div>';												
+			$html.='</div>';
+	    
+		foreach ($files as $file) :	
+			$html.='<div id="file-'.$file->ID.'" class="dm-meta-box-file">';
+				$html.='<div class="file-name">'.$file->post_title.'</div>';
+				$html.='<div class="file-type">'.$file->post_mime_type.'</div>';
+				$html.='<div class="file-size">'.dm_get_file_size($file->ID).'</div>';
+				$html.='<div class="file-version">Version</div>';
+				$html.='<div class="file-action"><a href="#" class="make-current">Make Current</a></div>';	
+			$html.='</div>';
+		endforeach;
 		
-		$html.='<div class="dm-meta-box-row">';
-			$html.='<label for="dm-metabox-file">Select File to Upload:</label>';
-			$html.='<input type="file" id="dm-metabox-file" name="dmmetabox[file]" value="" />';
-			$html.='<a href="" id="dm-metabox-file-upload" class="button button-secondary">Upload</a>';
-		$html.='</div>';
-		
-		$html.='<div class="dm-meta-box-row">';
-			$html.='<label for="dm-metabox-description">Description</label>';
-			$html.='<textarea name="dmmetabox[description]" id="dm-metabox-description" class="" placeholder="Document description">'.get_post_meta($post->ID, '_dm_document_description', true).'</textarea>';
 		$html.='</div>';
 		
 		$html.='<input type="hidden" name="dmmetabox[post_id]" id="dm-metabox-post-id" value="'.$post->ID.'" />';
@@ -70,10 +87,8 @@ class Document_Manager_Document_Details_Meta_Box {
         // Check if not a revision.
         if (wp_is_post_revision($post_id))
             return;
-			
-		update_post_meta($post_id, '_dm_document_description', $_POST['dmmetabox']['description']);
     }
 }
  
-new Document_Manager_Document_Details_Meta_Box();
+new Document_Manager_Document_Versions_Meta_Box();
 ?>
