@@ -40,11 +40,11 @@ class Document_Manager_Admin {
 		$response=array();	
 
 		if ($this->user_can_save('dm-upload-file', $data['security'])) :
-			$attachment_id=media_handle_upload('file', 0);
+			$attachment_id=media_handle_upload('file', $data['post_id']);
 		
 			if (is_wp_error($attachment_id)) :
 				$response['response'] = "ERROR";
-				$response['error'] = $fileErrors[ $data['file']['error'] ];
+				$response['error']=$fileErrors[$data['file']['error']];
 			else :
 				$fullsize_path = get_attached_file( $attachment_id );
 				$pathinfo = pathinfo( $fullsize_path );

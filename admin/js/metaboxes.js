@@ -16,7 +16,10 @@ jQuery(document).ready(function($) {
 		formData.append('file', file.files[0]);
 				
 		// nonce //
-		formData.append('security', dmMetaboxOptions.nonce);		
+		formData.append('security', dmMetaboxOptions.nonce);
+		
+		// post id //
+		formData.append('post_id', $('#dm-metabox-post-id').val());		
 
 		$.ajax({
 			url: ajaxurl,

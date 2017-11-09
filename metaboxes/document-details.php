@@ -42,6 +42,7 @@ class Document_Manager_Document_Details_Meta_Box {
 			$html.='<textarea name="dmmetabox[description]" id="dm-metabox-description" class="" placeholder="Document description"></textarea>';
 		$html.='</div>';
 		
+		$html.='<input type="hidden" name="dmmetabox[post_id]" id="dm-metabox-post-id" value="'.$post->ID.'" />';
 		
 		echo $html;
     }
