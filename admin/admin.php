@@ -16,6 +16,7 @@ class Document_Manager_Admin {
 		
 		wp_enqueue_script('dm-metaboxes-script');
 		
+		wp_enqueue_style('font-awesome', DM_URL.'css/font-awesome.min.css', '', '4.7.0');
 		wp_enqueue_style('dm-metaboxes-style', DM_URL.'admin/css/metaboxes.css', '', DM_VERSION);
 	}
 	

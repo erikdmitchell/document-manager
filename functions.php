@@ -21,5 +21,22 @@ function dm_get_file_size($file_id=0) {
 	return sprintf('%.2f '.$s[$e], ($bytes/pow(1024, floor($e))));
 }
 
+function dm_file_icon($mime_type='') {
+	echo dm_get_file_icon($mime_type);	
+}
+
+function dm_get_file_icon($mime_type='') {
+	switch ($mime_type) :
+		case 'application/pdf':
+			$icon_class='fa-file-pdf-o';
+			break;
+		default:
+			$icon_class='fa-file-o';
+	endswitch;
+	
+	$icon='<i class="fa '.$icon_class.'" aria-hidden="true"></i>';
+	
+	return $icon;
+}
 
 ?>

@@ -50,7 +50,7 @@ class Document_Manager_Document_Versions_Meta_Box {
 		foreach ($files as $file) :	
 			$html.='<div id="file-'.$file->ID.'" class="dm-meta-box-file">';
 				$html.='<div class="file-name">'.$file->post_title.'</div>';
-				$html.='<div class="file-type">'.$file->post_mime_type.'</div>';
+				$html.='<div class="file-type">'.dm_get_file_icon($file->post_mime_type).'</div>';
 				$html.='<div class="file-size">'.dm_get_file_size($file->ID).'</div>';
 				$html.='<div class="file-version">Version</div>';
 				$html.='<div class="file-action"><a href="#" class="make-current">Make Current</a></div>';	
