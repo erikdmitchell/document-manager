@@ -47,4 +47,14 @@ function dm_move_metaboxes() {
 	unset($wp_meta_boxes['post']['top']);
 }
 add_action('edit_form_after_title', 'dm_move_metaboxes');
+
+function dm_get_file_version($post_id=0) {
+	$current_version=0;
+	$meta_version=get_post_meta($data['post_id'], '_dm_document_version', true);
+	
+	if ($meta_version!='')
+		$current_version=$meta_version;
+	
+	return $current_version;
+}
 ?>

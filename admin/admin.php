@@ -4,6 +4,7 @@ class Document_Manager_Admin {
 	
 	public function __construct() {
 		add_action('admin_enqueue_scripts', array($this, 'scripts_styles'));
+		add_filter('wp_handle_upload_prefilter', array($this, 'modify_uploaded_file_names'), 1, 1);
 		add_action('wp_ajax_dm_metabox_upload_file', array($this, 'ajax_upload_file'));
 	}
 	
@@ -40,6 +41,7 @@ class Document_Manager_Admin {
   		$data=array_merge($_POST, $_FILES);
 		$response=array();	
 
+
 		if ($this->user_can_save('dm-upload-file', $data['security'])) :
 			$attachment_id=media_handle_upload('file', $data['post_id']);
 		
@@ -63,6 +65,31 @@ class Document_Manager_Admin {
 		
 		wp_die();
 	}
+
+	public function modify_uploaded_file_names($file) {
+	    // Get the parent post ID, if there is one
+	    if( isset($_GET['post_id']) ) {
+	        $post_id = $_GET['post_id'];
+	    } elseif( isset($_POST['post_id']) ) {
+	        $post_id = $_POST['post_id'];
+	    }
+
+		if (get_post_type($post_id)!='document')
+			return $file;
+
+		$current_version=dm_get_file_version($post_id);
+		$new_version=(int) $current_version + 1;
+		
+		$filename=pathinfo($file['name'], PATHINFO_FILENAME);
+		$filename_ext=pathinfo($file['name'], PATHINFO_EXTENSION);
+		
+		$file['name']="$filename-version-$new_version.$filename_ext";
+
+		// update version //
+		update_post_meta($post_id, '_dm_document_version', $new_version);
+
+		return $file;
+}
 	
 }	
 ?>
