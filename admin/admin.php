@@ -49,13 +49,14 @@ class Document_Manager_Admin {
 				$response['response'] = "ERROR";
 				$response['error']=$fileErrors[$data['file']['error']];
 			else :
-				$fullsize_path = get_attached_file( $attachment_id );
+				$fullsize_path = get_attached_file($attachment_id);
 				$pathinfo = pathinfo( $fullsize_path );
 				$url = wp_get_attachment_url( $attachment_id );
 				$response['response'] = "SUCCESS";
 				$response['filename'] = $pathinfo['filename'];
 				$response['url'] = $url;
 				$response['type'] = $pathinfo['extension'];
+				$this->add_file_meta($attachment_id, $data['post_id']);
 			endif;
 		else :
 			// todo
@@ -89,7 +90,12 @@ class Document_Manager_Admin {
 		update_post_meta($post_id, '_dm_document_version', $new_version);
 
 		return $file;
-}
+	}
+	
+	protected function add_file_meta($file_id=0, $post_id=0) {
+		add_post_meta($file_id, '_dm_document_timestamp', current_time('mysql')); // add timestamp
+		add_post_meta($file_id, '_dm_document_version_number', dm_get_file_version($post_id)); // add version
+	}
 	
 }	
 ?>

@@ -52,7 +52,7 @@ class Document_Manager_Document_Versions_Meta_Box {
 				$html.='<div class="file-name">'.$file->post_title.'</div>';
 				$html.='<div class="file-type">'.dm_get_file_icon($file->post_mime_type).'</div>';
 				$html.='<div class="file-size">'.dm_get_file_size($file->ID).'</div>';
-				$html.='<div class="file-version">Version</div>';
+				$html.='<div class="file-version">'.dm_get_file_version_number($file->ID).'</div>';
 				$html.='<div class="file-action"><a href="#" class="make-current">Make Current</a></div>';	
 			$html.='</div>';
 		endforeach;

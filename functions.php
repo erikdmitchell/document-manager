@@ -18,7 +18,7 @@ function dm_get_file_size($file_id=0) {
 	$s = array('b', 'Kb', 'Mb', 'Gb');
 	$e = floor(log($bytes)/log(1024));
 	
-	return sprintf('%.2f '.$s[$e], ($bytes/pow(1024, floor($e))));
+	return sprintf('%.0f '.$s[$e], ($bytes/pow(1024, floor($e))));
 }
 
 function dm_file_icon($mime_type='') {
@@ -50,11 +50,19 @@ add_action('edit_form_after_title', 'dm_move_metaboxes');
 
 function dm_get_file_version($post_id=0) {
 	$current_version=0;
-	$meta_version=get_post_meta($data['post_id'], '_dm_document_version', true);
+	$meta_version=get_post_meta($post_id, '_dm_document_version', true);
 	
 	if ($meta_version!='')
 		$current_version=$meta_version;
 	
 	return $current_version;
+}
+
+function dm_get_file_timestamp($file_id=0) {
+	return get_post_meta($file_id, '_dm_document_timestamp', true);
+}
+
+function dm_get_file_version_number($file_id=0) {
+	return get_post_meta($file_id, '_dm_document_version_number', true);
 }
 ?>
