@@ -39,4 +39,12 @@ function dm_get_file_icon($mime_type='') {
 	return $icon;
 }
 
+function dm_move_metaboxes() {
+    global $post, $wp_meta_boxes;
+        
+    do_meta_boxes(get_current_screen(), 'top', $post);
+
+	unset($wp_meta_boxes['post']['top']);
+}
+add_action('edit_form_after_title', 'dm_move_metaboxes');
 ?>

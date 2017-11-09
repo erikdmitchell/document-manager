@@ -20,7 +20,7 @@ class Document_Manager_Document_Versions_Meta_Box {
             __('Versions', 'document-manager'),
             array( $this, 'render_metabox'),
             'document',
-            'advanced',
+            'top',
             'default'
         );
  

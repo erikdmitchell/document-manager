@@ -20,7 +20,7 @@ class Document_Manager_Document_Details_Meta_Box {
             __('Document Details', 'document-manager'),
             array( $this, 'render_metabox'),
             'document',
-            'advanced',
+            'top',
             'default'
         );
  
