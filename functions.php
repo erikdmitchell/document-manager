@@ -65,4 +65,19 @@ function dm_get_file_timestamp($file_id=0) {
 function dm_get_file_version_number($file_id=0) {
 	return get_post_meta($file_id, '_dm_document_version_number', true);
 }
+
+function dm_get_document_url($post_id=0) {
+	global $wpdb;
+	
+	$version=dm_get_file_version($post_id);
+	
+	$id=$wpdb->get_var("
+		SELECT wp_postmeta.post_id
+		FROM $wpdb->posts
+		LEFT JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id
+		WHERE post_parent = $post_id AND $wpdb->postmeta.meta_key = '_dm_document_version_number' AND $wpdb->postmeta.meta_value = $version
+	");
+	
+	return get_permalink($id);
+}
 ?>
