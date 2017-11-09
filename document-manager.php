@@ -24,13 +24,7 @@ final class DocumentManager {
 
 	public $version='1.0.0';
 	
-	public $errors='';
-	
-	public $activation='';
-	
 	public $admin='';
-	
-	public $pages=array();
 
 	protected static $_instance=null;
 

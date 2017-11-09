@@ -1,0 +1,41 @@
+#dm-document-details {
+	border: none;
+	box-shadow: none;
+	background: transparent;
+}
+#dm-document-details button.handlediv,
+#dm-document-details h2.hndle {
+	display: none;
+}
+
+/* general mb styles */
+.dm-meta-box-row {
+	margin-bottom: 15px;
+}
+.dm-meta-box-row:last-child {
+	margin-bottom: 0;
+}
+.dm-meta-box-row label {
+	font-weight: bold;
+}
+.dm-meta-box-row textarea {
+	width: 100%;
+	height: 175px;
+	margin-top: 10px;
+}
+
+/* admin loader */
+.loader-image-container {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(204, 204, 204, 0.70);
+	display: none;
+}
+.loader-image-container .loader-image {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}

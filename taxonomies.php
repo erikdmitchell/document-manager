@@ -45,7 +45,7 @@ function document_tag_init() {
 	) );
 
 }
-add_action( 'init', 'document_tag_init' );
+add_action( 'init', 'document_tag_init', 11);
 
 function document_tag_updated_messages( $messages ) {
 
@@ -65,7 +65,7 @@ add_filter( 'term_updated_messages', 'document_tag_updated_messages' );
 
 function document_category_init() {
 	register_taxonomy( 'document-category', array( 'document' ), array(
-		'hierarchical'      => false,
+		'hierarchical'      => true,
 		'public'            => true,
 		'show_in_nav_menus' => true,
 		'show_ui'           => true,
@@ -108,7 +108,7 @@ function document_category_init() {
 	) );
 
 }
-add_action( 'init', 'document_category_init' );
+add_action( 'init', 'document_category_init', 10 );
 
 function document_category_updated_messages( $messages ) {
 
