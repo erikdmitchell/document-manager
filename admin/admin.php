@@ -4,7 +4,7 @@ class Document_Manager_Admin {
 	
 	public function __construct() {
 		add_action('admin_enqueue_scripts', array($this, 'scripts_styles'));
-		add_action('admin_init', array($this, 'update_settings'), 0);
+		add_action('init', array($this, 'update_settings'), 0);
 		add_action('admin_menu', array($this, 'admin_menu'));
 		add_filter('wp_handle_upload_prefilter', array($this, 'modify_uploaded_file_names'), 1, 1);
 		add_action('wp_ajax_dm_metabox_upload_file', array($this, 'ajax_upload_file'));
@@ -148,53 +148,59 @@ class Document_Manager_Admin {
 	}
 
 	public function update_settings() {	
-/*
-		if (!isset($_POST['pcl_admin_update']) || !wp_verify_nonce($_POST['pcl_admin_update'], 'update_settings'))
+		if (!isset($_POST['dm_admin_update']) || !wp_verify_nonce($_POST['dm_admin_update'], 'update_settings'))
 			return;
-			
-		$settings_data=$_POST['pcl_settings'];
-			
-		// update pages //
-		$pages=wp_parse_args($settings_data['pages'], get_option('pcl_pages', array()));
+
+		$settings_data=$_POST['dm_settings'];
+		$new_settings=array();
+		$current_settings=get_option('dm_settings', '');
 		
-		update_option('pcl_pages', $pages);
-
-		// update redirects //
-		foreach ($settings_data['redirect'] as $option => $url) :
-			if ($url!='')
-				update_option($option, $url);
-		endforeach;
-
-		// update admin bar //
-		if (isset($settings_data['hide_admin_bar'])) :
-			update_option('pcl-hide-admin-bar', 1);
-		else :
-			delete_option('pcl-hide-admin-bar');
+		// update uploads folder //
+		if ($settings_data['uploads_basefolder']!=$current_settings['uploads']['basefolder']) :
+			$new_settings['uploads']=$this->update_uploads_folder($settings_data['uploads_basefolder']);
 		endif;
-
-		// update reCaptcha //
-		if (isset($settings_data['enable_recaptcha'])) :
-			update_option('pcl-enable-recaptcha', 1);
-		else :
-			delete_option('pcl-enable-recaptcha');
-		endif;
-
-		if ($settings_data['recaptcha_site_key']!='')
-			update_option('pcl-recaptcha-site-key', $settings_data['recaptcha_site_key']);
-	
-		if ($settings_data['recaptcha_secret_key']!='')
-			update_option('pcl-recaptcha-secret-key', $settings_data['recaptcha_secret_key']);
-
-		// require activation key //
-		if (isset($settings_data['require_activation_key'])) :
-			update_option('pcl-require-activation-key', 1);
-		else :
-			delete_option('pcl-require-activation-key');
-		endif;
-
+		
+		$settings=dm_parse_args($new_settings, $current_settings);
+			
+		update_option('dm_settings', $settings);
+/*			
 		$this->admin_notices['updated']='Settings Updated!';
 */
-	}	
+	}
+	
+	private function update_uploads_folder($basefolder='') {
+		if (empty($basefolder))
+			return;
+			
+		$siteurl=get_option('siteurl');
+		$upload_path=trim(get_option('upload_path')); // NA
+		$dir=rtrim(ABSPATH, '/').$basefolder;
+		$url=$siteurl.$basefolder;
+		$basedir=$dir;
+	    $baseurl=$url;
+	    $subdir = '';
+	    
+		if (get_option('uploads_use_yearmonth_folders')) :
+			$time = current_time( 'mysql' );
+			$y = substr( $time, 0, 4 );
+			$m = substr( $time, 5, 2 );
+			$subdir = "/$y/$m";
+		endif;
+		
+		 
+		$dir.= $subdir;
+	    $url.= $subdir;
+ 
+	    return array(
+	        'path'    => $dir,
+	        'url'     => $url,
+	        'subdir'  => $subdir,
+	        'basedir' => $basedir,
+	        'baseurl' => $baseurl, 
+	        'error'   => false,
+	        'basefolder' => $basefolder,
+	    );	
+	}
 
 	public function get_admin_page($template_name=false) {
 		if (!$template_name)

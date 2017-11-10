@@ -10,10 +10,11 @@
 	<table class="form-table options">
 		<tbody>
 			<tr>
-				<th scope="row"><label for="uploads_folder"><?php _e('Uploads Folder', 'document-manager'); ?></label></th>
+				<th scope="row"><label for="uploads_basefolder"><?php _e('Uploads Folder', 'document-manager'); ?></label></th>
 				<td>
-					<input type="text" name="dm_options[uploads_folder]" id="uploads_folder" class="regular-text" value="" />
-					<p class="description"><?php _e('The folder documents should be uploaded to. Default is uploads folder.', 'document-manager'); ?></p>
+					<code><?php echo get_option('siteurl'); ?></code>
+					<input type="text" name="dm_settings[uploads_basefolder]" id="uploads_basefolder" class="regular-text code" value="<?php echo DocumentManager()->settings['uploads']['basefolder']; ?>" />
+					<p class="description"><?php _e('The folder documents should be uploaded to. Default is uploads folder. Pleaser enter the <strong>folder structure only</strong> i.e. /uploads', 'document-manager'); ?></p>
 				</td>
 			</tr>
 		</tbody>

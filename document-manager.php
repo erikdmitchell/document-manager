@@ -76,10 +76,15 @@ final class DocumentManager {
 		register_activation_hook(DM_PLUGIN_FILE, array('Document_Manager_Install', 'install'));
 		add_action('init', array($this, 'init'), 0);
 		add_action('wp_enqueue_scripts', array($this, 'scripts_styles'));
+		add_action('init', array($this, 'get_settings'), 99);
 	}
 
 	public function init() {
-		$this->settings=get_option('dm_settings', '');
+		
+	}
+	
+	public function get_settings() {		
+		$this->settings=get_option('dm_settings', '');		
 	}
 	
 	public function scripts_styles() {

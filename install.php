@@ -67,6 +67,7 @@ class Document_Manager_Install {
 		$default_settings=array(
 			'uploads' => wp_upload_dir(),
 		);
+		$default_settings['uploads']['basefolder']=str_replace(get_option('siteurl'), '', $default_settings['uploads']['baseurl']);
 		$stored_settings=get_option('dm_settings', array()); // in case the plugi nwas previously installed
 		$settings=dm_parse_args($store_settings, $default_settings);
 		
