@@ -180,16 +180,19 @@ class Document_Manager_Admin {
 	    $baseurl=$url;
 	    $subdir = '';
 	    
-		if (get_option('uploads_use_yearmonth_folders')) :
+		if (get_option('uploads_use_yearmonth_folders')) : // test this
 			$time = current_time( 'mysql' );
 			$y = substr( $time, 0, 4 );
 			$m = substr( $time, 5, 2 );
 			$subdir = "/$y/$m";
 		endif;
 		
-		 
 		$dir.= $subdir;
 	    $url.= $subdir;
+	    
+	    // create folder if need be //
+		if (!is_dir($basedir))
+			mkdir($basedir, 0700);
  
 	    return array(
 	        'path'    => $dir,
