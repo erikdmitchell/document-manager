@@ -4,6 +4,8 @@ class Document_Manager_Admin {
 	
 	public function __construct() {
 		add_action('admin_enqueue_scripts', array($this, 'scripts_styles'));
+		add_action('admin_init', array($this, 'update_settings'), 0);
+		add_action('admin_menu', array($this, 'admin_menu'));
 		add_filter('wp_handle_upload_prefilter', array($this, 'modify_uploaded_file_names'), 1, 1);
 		add_action('wp_ajax_dm_metabox_upload_file', array($this, 'ajax_upload_file'));
 		add_action('wp_ajax_dm_reload_metabox', array($this, 'ajax_reload_metabox'));
@@ -20,6 +22,43 @@ class Document_Manager_Admin {
 		
 		wp_enqueue_style('font-awesome', DM_URL.'css/font-awesome.min.css', '', '4.7.0');
 		wp_enqueue_style('dm-metaboxes-style', DM_URL.'admin/css/metaboxes.css', '', DM_VERSION);
+	}
+	
+	public function admin_menu() {
+		add_options_page('Document Manager', 'Document Manager', 'manage_options', 'document-manager', array($this, 'admin_page'));
+	}
+	
+	public function admin_page() {
+		$html=null;
+		$tabs=array(
+			'settings' => 'Settings',
+			//'emails' => 'Emails',
+		);
+		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings';
+			
+		$html.='<div class="wrap dm-admin">';
+			$html.='<h1>Document Manager</h1>';
+			
+			$html.='<h2 class="nav-tab-wrapper">';
+				foreach ($tabs as $key => $name) :
+					if ($active_tab==$key) :
+						$class='nav-tab-active';
+					else :
+						$class=null;
+					endif;
+
+					$html.='<a href="?page=document-manager&tab='.$key.'" class="nav-tab '.$class.'">'.$name.'</a>';
+				endforeach;
+			$html.='</h2>';
+
+			switch ($active_tab) :					
+				default:
+					$html.=$this->get_admin_page('settings');
+			endswitch;
+
+		$html.='</div>';
+
+		echo $html;		
 	}
 	
 	public function user_can_save($nonce_name, $nonce) {
@@ -107,6 +146,74 @@ class Document_Manager_Admin {
 		
 		wp_die();
 	}
+
+	public function update_settings() {	
+/*
+		if (!isset($_POST['pcl_admin_update']) || !wp_verify_nonce($_POST['pcl_admin_update'], 'update_settings'))
+			return;
+			
+		$settings_data=$_POST['pcl_settings'];
+			
+		// update pages //
+		$pages=wp_parse_args($settings_data['pages'], get_option('pcl_pages', array()));
+		
+		update_option('pcl_pages', $pages);
+
+		// update redirects //
+		foreach ($settings_data['redirect'] as $option => $url) :
+			if ($url!='')
+				update_option($option, $url);
+		endforeach;
+
+		// update admin bar //
+		if (isset($settings_data['hide_admin_bar'])) :
+			update_option('pcl-hide-admin-bar', 1);
+		else :
+			delete_option('pcl-hide-admin-bar');
+		endif;
+
+		// update reCaptcha //
+		if (isset($settings_data['enable_recaptcha'])) :
+			update_option('pcl-enable-recaptcha', 1);
+		else :
+			delete_option('pcl-enable-recaptcha');
+		endif;
+
+		if ($settings_data['recaptcha_site_key']!='')
+			update_option('pcl-recaptcha-site-key', $settings_data['recaptcha_site_key']);
+	
+		if ($settings_data['recaptcha_secret_key']!='')
+			update_option('pcl-recaptcha-secret-key', $settings_data['recaptcha_secret_key']);
+
+		// require activation key //
+		if (isset($settings_data['require_activation_key'])) :
+			update_option('pcl-require-activation-key', 1);
+		else :
+			delete_option('pcl-require-activation-key');
+		endif;
+
+		$this->admin_notices['updated']='Settings Updated!';
+*/
+	}	
+
+	public function get_admin_page($template_name=false) {
+		if (!$template_name)
+			return false;
+
+		ob_start();
+
+		do_action('dm_before_admin_'.$template_name);
+
+		include(DM_PATH.'admin/pages/'.$template_name.'.php');
+
+		do_action('dm_after_admin_'.$template_name);
+
+		$html=ob_get_contents();
+
+		ob_end_clean();
+
+		return $html;
+	}	
 	
 }	
 ?>
