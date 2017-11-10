@@ -83,7 +83,11 @@ class Document_Manager_Admin {
 
 
 		if ($this->user_can_save('dm-upload-file', $data['security'])) :
+			add_filter('upload_dir', array($this, 'change_upload_dir'));
+		
 			$attachment_id=media_handle_upload('file', $data['post_id']);
+		
+			remove_filter('upload_dir', array($this, 'change_upload_dir'));
 		
 			if (is_wp_error($attachment_id)) :
 				$response['response'] = "ERROR";
@@ -130,6 +134,14 @@ class Document_Manager_Admin {
 		update_post_meta($post_id, '_dm_document_version', $new_version);
 
 		return $file;
+	}
+	
+	public function change_upload_dir($dirs) {
+		$dirs['subdir']='';
+		$dirs['path']=DocumentManager()->settings['uploads']['basedir'];
+		$dirs['url']=DocumentManager()->settings['uploads']['baseurl'];
+		
+		return $dirs;
 	}
 	
 	protected function add_file_meta($file_id=0, $post_id=0) {

@@ -1,7 +1,5 @@
 <h2>Settings</h2>
-<pre>
-<?php print_r(DocumentManager()); ?>
-</pre>
+
 <form method="post" action="" method="post">
 	<?php wp_nonce_field('update_settings', 'dm_admin_update'); ?>
 
