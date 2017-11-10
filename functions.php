@@ -80,4 +80,20 @@ function dm_get_document_url($post_id=0) {
 	
 	return get_permalink($id);
 }
+
+function dm_parse_args(&$a, $b) {
+	$a = (array) $a;
+	$b = (array) $b;
+	$result = $b;
+	
+	foreach ( $a as $k => &$v ) {
+		if ( is_array( $v ) && isset( $result[ $k ] ) ) {
+			$result[ $k ] = dm_parse_args($v, $result[$k]);
+		} else {
+			$result[ $k ] = $v;
+		}
+	}
+	
+	return $result;	
+}
 ?>

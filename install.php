@@ -49,10 +49,28 @@ class Document_Manager_Install {
 		// If we made it till here nothing is running yet, lets set the transient now.
 		set_transient('dm_installing', 'yes', MINUTE_IN_SECONDS*10);
 
+		self::settings();
 		self::update_version();
 		self::update();
 	
 		delete_transient('dm_installing');
+	}
+
+	/**
+	 * settings function.
+	 * 
+	 * @access private
+	 * @static
+	 * @return void
+	 */
+	private static function settings() {		
+		$default_settings=array(
+			'uploads' => wp_upload_dir(),
+		);
+		$stored_settings=get_option('dm_settings', array()); // in case the plugi nwas previously installed
+		$settings=dm_parse_args($store_settings, $default_settings);
+		
+		update_option('dm_settings', $settings);
 	}
 
 	/**

@@ -25,6 +25,8 @@ final class DocumentManager {
 	public $version='1.0.0';
 	
 	public $admin='';
+	
+	public $settings='';
 
 	protected static $_instance=null;
 
@@ -77,7 +79,7 @@ final class DocumentManager {
 	}
 
 	public function init() {
-
+		$this->settings=get_option('dm_settings', '');
 	}
 	
 	public function scripts_styles() {
