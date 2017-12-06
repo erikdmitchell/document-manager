@@ -215,3 +215,5 @@ class Document_Manager_Document_Upload {
 	}	
 	
 }
+
+new Document_Manager_Document_Upload();
