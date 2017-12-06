@@ -3,12 +3,16 @@
 class Document_Manager_Admin {
 	
 	public function __construct() {
+    	add_action( 'init', array( $this, 'includes' ) );
 		add_action('admin_enqueue_scripts', array($this, 'scripts_styles'));
 		add_action('init', array($this, 'update_settings'), 0);
 		add_action('admin_menu', array($this, 'admin_menu'));
-		//add_filter('wp_handle_upload_prefilter', array($this, 'modify_uploaded_file_names'), 1, 1);
-		//add_action('wp_ajax_dm_metabox_upload_file', array($this, 'ajax_upload_file'));
 		add_action('wp_ajax_dm_reload_metabox', array($this, 'ajax_reload_metabox'));
+	}
+	
+	public function includes() {
+        include_once(dirname(__FILE__).'/class-bulk-import.php');
+        include_once(dirname(__FILE__).'/class-document-upload.php');        
 	}
 	
 	public function scripts_styles() {

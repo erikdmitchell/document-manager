@@ -63,7 +63,7 @@ final class DocumentManager {
 		include_once(DM_PATH.'taxonomies.php');		
 		include_once(DM_PATH.'functions.php');
 		include_once(DM_PATH.'document-url.php');
-		include_once(DM_PATH.'admin/admin.php');
+		include_once(DM_PATH.'admin/class-admin.php');
 		
 		new Document_Manager_Document_URL();
 		
