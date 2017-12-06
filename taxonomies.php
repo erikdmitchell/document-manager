@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Initialize document tag
+ *
+ * @access public
+ * @return void
+ */
 function document_tag_init() {
     register_taxonomy(
         'document-tag', array( 'document' ), array(
@@ -49,6 +55,13 @@ function document_tag_init() {
 }
 add_action( 'init', 'document_tag_init', 11 );
 
+/**
+ * Document tag messages
+ *
+ * @access public
+ * @param mixed $messages array.
+ * @return array
+ */
 function document_tag_updated_messages( $messages ) {
 
     $messages['document-tag'] = array(
@@ -65,6 +78,12 @@ function document_tag_updated_messages( $messages ) {
 }
 add_filter( 'term_updated_messages', 'document_tag_updated_messages' );
 
+/**
+ * Initialize document category
+ *
+ * @access public
+ * @return void
+ */
 function document_category_init() {
     register_taxonomy(
         'document-category', array( 'document' ), array(
@@ -114,6 +133,13 @@ function document_category_init() {
 }
 add_action( 'init', 'document_category_init', 10 );
 
+/**
+ * Document category messages
+ *
+ * @access public
+ * @param mixed $messages array.
+ * @return array
+ */
 function document_category_updated_messages( $messages ) {
 
     $messages['document-category'] = array(

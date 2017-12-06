@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Init document post type
+ *
+ * @access public
+ * @return void
+ */
 function document_init() {
     register_post_type(
         'document', array(
@@ -46,6 +53,13 @@ function document_init() {
 }
 add_action( 'init', 'document_init' );
 
+/**
+ * Document messages
+ *
+ * @access public
+ * @param mixed $messages array.
+ * @return array
+ */
 function document_updated_messages( $messages ) {
     global $post;
 
@@ -64,7 +78,7 @@ function document_updated_messages( $messages ) {
         8  => sprintf( __( 'Document submitted. <a target="_blank" href="%s">Preview Document</a>', 'document-manager' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
         9  => sprintf(
             __( 'Document scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Document</a>', 'document-manager' ),
-            // translators: Publish box date format, see https://secure.php.net/manual/en/function.date.php
+            // translators: Publish box date format, see https://secure.php.net/manual/en/function.date.php.
             date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( $permalink )
         ),
         10 => sprintf( __( 'Document draft updated. <a target="_blank" href="%s">Preview Document</a>', 'document-manager' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
