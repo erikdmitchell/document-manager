@@ -3,7 +3,7 @@
  * Plugin Name: Document Manager
  * Plugin URI: 
  * Description: The ultimate document manager.
- * Version: 1.0.0
+ * Version: 1.0.0-alpha
  * Author: 
  * Author URI: 
  * Requires at least: 4.0
@@ -22,7 +22,7 @@ if (!defined('DM_PLUGIN_FILE')) {
 
 final class DocumentManager {
 
-	public $version='1.0.0';
+	public $version='1.0.0-alpha';
 	
 	public $admin='';
 	
