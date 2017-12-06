@@ -11,6 +11,8 @@ class Document_Manager_Admin {
 	}
 	
 	public function includes() {
+        include_once(dirname(__FILE__).'/admin-functions.php');
+        
         include_once(dirname(__FILE__).'/class-bulk-import.php');
         include_once(dirname(__FILE__).'/class-document-upload.php');        
 	}
@@ -34,31 +36,33 @@ class Document_Manager_Admin {
 	
 	public function admin_page() {
 		$html=null;
-		$tabs=array(
-			'settings' => 'Settings',
-			//'emails' => 'Emails',
-		);
+		$tabs=array(array(
+    		'slug' => 'settings',
+    		'title' => 'Settings',
+    		'pagename' => 'settings',
+		));
+		$tabs=apply_filters('document_manager_admin_tabs', $tabs, 99);
 		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings';
+		$pagename='settings';
 			
 		$html.='<div class="wrap dm-admin">';
 			$html.='<h1>Document Manager</h1>';
 			
 			$html.='<h2 class="nav-tab-wrapper">';
-				foreach ($tabs as $key => $name) :
-					if ($active_tab==$key) :
+				foreach ($tabs as $tab) :
+					if ($active_tab==$tab['slug']) :
 						$class='nav-tab-active';
 					else :
 						$class=null;
 					endif;
+					
+					$pagename=$tab['pagename'];
 
-					$html.='<a href="?page=document-manager&tab='.$key.'" class="nav-tab '.$class.'">'.$name.'</a>';
+					$html.='<a href="?page=document-manager&tab='.$tab['slug'].'" class="nav-tab '.$class.'">'.$tab['title'].'</a>';
 				endforeach;
 			$html.='</h2>';
 
-			switch ($active_tab) :					
-				default:
-					$html.=$this->get_admin_page('settings');
-			endswitch;
+            $html.=$this->get_admin_page($pagename);
 
 		$html.='</div>';
 
