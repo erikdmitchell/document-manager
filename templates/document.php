@@ -1,49 +1,21 @@
 <?php get_header(); ?>
 
-<?php echo $doc_id=dm_get_document_id(get_queried_object_id()); ?>
-
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="post-<?php dm_document_doc_id(get_the_ID()); ?>" <?php post_class('', dm_get_document_id(get_the_ID())); ?>>
+    
 	<header class="entry-header">
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 	</header><!-- .entry-header -->
 
-	<?php twentysixteen_excerpt(); ?>
-
-	<?php twentysixteen_post_thumbnail(); ?>
-
 	<div class="entry-content">
-		<?php
-			the_content();
+		<?php dm_document_description(); ?>
 
-			wp_link_pages( array(
-				'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'twentysixteen' ) . '</span>',
-				'after'       => '</div>',
-				'link_before' => '<span>',
-				'link_after'  => '</span>',
-				'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'twentysixteen' ) . ' </span>%',
-				'separator'   => '<span class="screen-reader-text">, </span>',
-			) );
-
-			if ( '' !== get_the_author_meta( 'description' ) ) {
-				get_template_part( 'template-parts/biography' );
-			}
-		?>
+        <div class="document">
+            <a href="<?php echo wp_get_attachment_url(dm_get_document_id(get_the_ID())); ?>">
+                <?php echo wp_get_attachment_image(dm_get_document_id(get_the_ID()), 'medium'); ?>
+            </a>
+        </div>
 	</div><!-- .entry-content -->
 
-	<footer class="entry-footer">
-		<?php twentysixteen_entry_meta(); ?>
-		<?php
-			edit_post_link(
-				sprintf(
-					/* translators: %s: Name of current post */
-					__( 'Edit<span class="screen-reader-text"> "%s"</span>', 'twentysixteen' ),
-					get_the_title()
-				),
-				'<span class="edit-link">',
-				'</span>'
-			);
-		?>
-	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->
 
 <?php get_footer(); ?>

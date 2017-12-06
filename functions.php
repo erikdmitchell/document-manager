@@ -111,3 +111,13 @@ function dm_parse_args(&$a, $b) {
 	
 	return $result;	
 }
+
+function dm_document_doc_id($post_id=0) {
+    echo dm_get_document_id($post_id);
+}
+
+function dm_document_description() {
+    global $post;
+
+    echo get_post_meta($post->ID, '_dm_document_description', true);
+}
