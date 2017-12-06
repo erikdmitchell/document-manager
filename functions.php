@@ -81,6 +81,21 @@ function dm_get_document_url($post_id=0) {
 	return get_permalink($id);
 }
 
+function dm_get_document_id($post_id=0) {
+	global $wpdb;
+	
+	$version=dm_get_file_version($post_id);
+	
+	$id=$wpdb->get_var("
+		SELECT wp_postmeta.post_id
+		FROM $wpdb->posts
+		LEFT JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id
+		WHERE post_parent = $post_id AND $wpdb->postmeta.meta_key = '_dm_document_version_number' AND $wpdb->postmeta.meta_value = $version
+	");
+	
+	return $id;
+}
+
 function dm_parse_args(&$a, $b) {
 	$a = (array) $a;
 	$b = (array) $b;
@@ -96,4 +111,3 @@ function dm_parse_args(&$a, $b) {
 	
 	return $result;	
 }
-?>
