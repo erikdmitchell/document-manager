@@ -193,7 +193,7 @@ class Document_Manager_Document_Upload {
 		$filename=pathinfo($file['name'], PATHINFO_FILENAME);
 		$filename_ext=pathinfo($file['name'], PATHINFO_EXTENSION);
 		
-		$file['name']="$filename-version-$new_version.$filename_ext";
+		$file['name']=md5($name) . "-version-$new_version.$filename_ext";
 
 		// update version //
 		update_post_meta($post_id, '_dm_document_version', $new_version);
