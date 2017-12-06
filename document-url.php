@@ -18,10 +18,10 @@ class Document_Manager_Document_URL {
         $template='';
     	$template_name='document';
     
-    	if (file_exists(get_stylesheet_directory().'/pickle-custom-login/'.$template_name.'.php')) :
-    		$template=get_stylesheet_directory().'/pickle-custom-login/'.$template_name.'.php';
-    	elseif (file_exists(get_template_directory().'/pickle-custom-login/'.$template_name.'.php')) :
-    		$template=get_template_directory().'/pickle-custom-login/'.$template_name.'.php';
+    	if (file_exists(get_stylesheet_directory().'/document-manager/'.$template_name.'.php')) :
+    		$template=get_stylesheet_directory().'/document-manager/'.$template_name.'.php';
+    	elseif (file_exists(get_template_directory().'/document-manager/'.$template_name.'.php')) :
+    		$template=get_template_directory().'/document-manager/'.$template_name.'.php';
     	else :
     		$template=DM_PATH.'templates/'.$template_name.'.php';
     	endif;

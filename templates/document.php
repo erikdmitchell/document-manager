@@ -1,4 +1,13 @@
-<?php get_header(); ?>
+<?php 
+/**
+ * The template for displaying a single document
+ *
+ * This template can be overridden by copying it to yourtheme/document-manager/document.php.
+ *
+ * @version 1.0.0
+ */
+    
+get_header(); ?>
 
 <article id="post-<?php dm_document_doc_id(get_the_ID()); ?>" <?php post_class('', dm_get_document_id(get_the_ID())); ?>>
     
