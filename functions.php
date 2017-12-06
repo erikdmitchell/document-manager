@@ -14,9 +14,12 @@ add_action('init', 'dm_load_files', 1);
 
 function dm_get_file_size($file_id=0) {
 	$file=get_attached_file($file_id);
-	$bytes = filesize($file);
+	$bytes =absint(filesize($file));
 	$s = array('b', 'Kb', 'Mb', 'Gb');
 	$e = floor(log($bytes)/log(1024));
+
+    if ($bytes == 0)
+        return 0;
 	
 	return sprintf('%.0f '.$s[$e], ($bytes/pow(1024, floor($e))));
 }
