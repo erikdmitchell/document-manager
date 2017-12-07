@@ -1,6 +1,6 @@
 <?php
 
-class Document_Manager_Admin {
+class DM_Admin {
 
     public function __construct() {
         add_action( 'init', array( $this, 'includes' ) );

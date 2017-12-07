@@ -68,7 +68,7 @@ final class DocumentManager {
         new Document_Manager_Document_URL();
 
         if ( is_admin() ) :
-            $this->admin = new Document_Manager_Admin();
+            $this->admin = new DM_Admin();
         endif;
     }
 
