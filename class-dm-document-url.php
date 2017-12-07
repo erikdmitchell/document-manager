@@ -1,18 +1,45 @@
 <?php
-class Document_Manager_Document_URL {
+/**
+ * DM_Document_URL File Doc Comment
+ *
+ * @package Document Manager
+ */
 
+/**
+ * DM_Document_URL class.
+ */
+class DM_Document_URL {
+
+    /**
+     * Construct class.
+     *
+     * @access public
+     * @return void
+     */
     public function __construct() {
         $this->init();
     }
 
+    /**
+     * Init function.
+     *
+     * @access public
+     * @return void
+     */
     public function init() {
         add_action( 'single_template', array( $this, 'single_document_template_redirect' ) );
     }
 
+    /**
+     * Redirects template if a document.
+     *
+     * @access public
+     * @return template
+     */
     public function single_document_template_redirect() {
         global $post;
 
-        if ( $post->post_type != 'document' ) {
+        if ( 'document' !== $post->post_type ) {
             return $single_template;
         }
 
