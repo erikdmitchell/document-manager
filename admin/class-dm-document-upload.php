@@ -250,15 +250,15 @@ class DM_Document_Upload {
     /**
      * Changes upload dir to custom one.
      *
-     * @access protected
+     * @access public
      * @param mixed $dirs array.
      * @return array
      */
-    protected function change_upload_dir( $dirs ) {
+    public function change_upload_dir( $dirs ) {
         $dirs['subdir'] = '';
         $dirs['path']   = DocumentManager()->settings['uploads']['basedir'];
         $dirs['url']    = DocumentManager()->settings['uploads']['baseurl'];
-print_r($dirs);
+
         return $dirs;
     }
 
