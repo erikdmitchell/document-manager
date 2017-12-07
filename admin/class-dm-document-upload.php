@@ -277,4 +277,4 @@ class DM_Document_Upload {
 
 }
 
-new Document_Manager_Document_Upload();
+new DM_Document_Upload();

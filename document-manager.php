@@ -134,9 +134,9 @@ final class DocumentManager {
         include_once DM_PATH . 'taxonomies.php';
         include_once DM_PATH . 'functions.php';
         include_once DM_PATH . 'class-dm-document-url.php';
-        include_once DM_PATH . 'admin/class-admin.php';
+        include_once DM_PATH . 'admin/class-dm-admin.php';
 
-        new Document_Manager_Document_URL();
+        new DM_Document_URL();
 
         if ( is_admin() ) :
             $this->admin = new DM_Admin();

@@ -139,5 +139,4 @@ class DM_Install {
 
 }
 
-Document_Manager_Install::init();
-
+DM_Install::init();

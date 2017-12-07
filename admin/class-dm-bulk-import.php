@@ -234,4 +234,4 @@ class DM_Bulk_Import {
 
 }
 
-new Document_Manager_Bulk_Import();
+new DM_Bulk_Import();

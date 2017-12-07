@@ -130,5 +130,5 @@ class DM_Document_Versions_Metabox {
     }
 }
 
-new Document_Manager_Document_Versions_Meta_Box();
+new DM_Document_Versions_Metabox();
 

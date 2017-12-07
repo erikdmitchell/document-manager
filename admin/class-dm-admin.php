@@ -31,8 +31,6 @@ class DM_Admin {
      * @return void
      */
     public function includes() {
-        include_once dirname( __FILE__ ) . '/admin-functions.php';
-
         include_once dirname( __FILE__ ) . '/class-dm-bulk-import.php';
         include_once dirname( __FILE__ ) . '/class-dm-document-upload.php';
     }
@@ -120,7 +118,7 @@ class DM_Admin {
     public function ajax_reload_metabox() {
         $metabox = wp_unslash( $_POST['metabox'] ); // Input var okay.
         $mb      = new $metabox();
-        $post    = get_post( ( wp_unslash( $_POST['post_id'] ) ); // Input var okay.
+        $post    = get_post( wp_unslash( $_POST['post_id'] ) ); // Input var okay.
 
         echo esc_html( $mb->render_metabox( $post ) );
 

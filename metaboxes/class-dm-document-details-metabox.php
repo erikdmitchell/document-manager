@@ -113,5 +113,5 @@ class DM_Document_Details_Metabox {
     }
 }
 
-new Document_Manager_Document_Details_Meta_Box();
+new DM_Document_Details_Metabox();
 
