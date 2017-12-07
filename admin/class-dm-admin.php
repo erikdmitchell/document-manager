@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * DM_Admin class.
+ */
 class DM_Admin {
 
+    /**
+     * Class construct function.
+     *
+     * @access public
+     * @return void
+     */
     public function __construct() {
         add_action( 'init', array( $this, 'includes' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'scripts_styles' ) );
@@ -10,13 +19,25 @@ class DM_Admin {
         add_action( 'wp_ajax_dm_reload_metabox', array( $this, 'ajax_reload_metabox' ) );
     }
 
+    /**
+     * Includes function.
+     *
+     * @access public
+     * @return void
+     */
     public function includes() {
         include_once dirname( __FILE__ ) . '/admin-functions.php';
 
-        include_once dirname( __FILE__ ) . '/class-bulk-import.php';
+        include_once dirname( __FILE__ ) . '/class-dm-bulk-import.php';
         include_once dirname( __FILE__ ) . '/class-document-upload.php';
     }
 
+    /**
+     * Include scripts and styles.
+     *
+     * @access public
+     * @return void
+     */
     public function scripts_styles() {
         wp_register_script( 'dm-metaboxes-script', DM_URL . 'admin/js/metaboxes.js', array( 'jquery' ), DM_VERSION, true );
 
@@ -32,10 +53,22 @@ class DM_Admin {
         wp_enqueue_style( 'dm-metaboxes-style', DM_URL . 'admin/css/metaboxes.css', '', DM_VERSION );
     }
 
+    /**
+     * Add to admin menu.
+     *
+     * @access public
+     * @return void
+     */
     public function admin_menu() {
         add_options_page( 'Document Manager', 'Document Manager', 'manage_options', 'document-manager', array( $this, 'admin_page' ) );
     }
 
+    /**
+     * Display admin page (wrapper).
+     *
+     * @access public
+     * @return void
+     */
     public function admin_page() {
         $html       = null;
         $tabs       = array(
@@ -46,7 +79,7 @@ class DM_Admin {
             ),
         );
         $tabs       = apply_filters( 'document_manager_admin_tabs', $tabs, 99 );
-        $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'settings';
+        $active_tab = isset( $_GET['tab'] ) ? wp_unslash( $_GET['tab'] ) : 'settings'; // Input var okay.
         $pagename   = 'settings';
 
         $html     .= '<div class="wrap dm-admin">';
@@ -54,7 +87,7 @@ class DM_Admin {
 
             $html .= '<h2 class="nav-tab-wrapper">';
         foreach ( $tabs as $tab ) :
-            if ( $active_tab == $tab['slug'] ) :
+            if ( $active_tab === $tab['slug'] ) :
                 $class = 'nav-tab-active';
             else :
                 $class = null;
@@ -70,55 +103,71 @@ class DM_Admin {
 
         $html .= '</div>';
 
-        echo $html;
+        echo esc_html( $html );
     }
 
+    /**
+     * AJAX reload our metabox.
+     *
+     * @access public
+     * @return void
+     */
     public function ajax_reload_metabox() {
-        $metabox = $_POST['metabox'];
+        $metabox = wp_unslash( $_POST['metabox'] ); // Input var okay.
         $mb      = new $metabox();
-        $post    = get_post( $_POST['post_id'] );
+        $post    = get_post( wp_unslash( $_POST['post_id'] ) ); // Input var okay.
 
-        echo $mb->render_metabox( $post );
+        echo esc_html( $mb->render_metabox( $post ) );
 
         wp_die();
     }
 
+    /**
+     * Update admin settings.
+     *
+     * @access public
+     * @return void
+     */
     public function update_settings() {
-        if ( ! isset( $_POST['dm_admin_update'] ) || ! wp_verify_nonce( $_POST['dm_admin_update'], 'update_settings' ) ) {
+        if ( ! isset( $_POST['dm_admin_update'] ) || ! wp_verify_nonce( wp_unslash( $_POST['dm_admin_update'] ), 'update_settings' ) ) { // Input var okay.
             return;
         }
 
-        $settings_data    = $_POST['dm_settings'];
+        $settings_data    = ! empty( $_POST['dm_settings'] ) ? wp_unslash( $_POST['dm_settings'] ) : ''; // Input var okay.
         $new_settings     = array();
         $current_settings = get_option( 'dm_settings', '' );
 
-        // update uploads folder //
-        if ( $settings_data['uploads_basefolder'] != $current_settings['uploads']['basefolder'] ) :
+        // update uploads folder.
+        if ( $settings_data['uploads_basefolder'] !== $current_settings['uploads']['basefolder'] ) :
             $new_settings['uploads'] = $this->update_uploads_folder( $settings_data['uploads_basefolder'] );
         endif;
 
         $settings = dm_parse_args( $new_settings, $current_settings );
 
         update_option( 'dm_settings', $settings );
-        /*
-		$this->admin_notices['updated']='Settings Updated!';
-        */
     }
 
+    /**
+     * Updates uploads folder for documents.
+     *
+     * @access private
+     * @param string $basefolder (default: '').
+     * @return array
+     */
     private function update_uploads_folder( $basefolder = '' ) {
         if ( empty( $basefolder ) ) {
             return;
         }
 
         $siteurl     = get_option( 'siteurl' );
-        $upload_path = trim( get_option( 'upload_path' ) ); // NA
+        $upload_path = trim( get_option( 'upload_path' ) ); // NA.
         $dir         = rtrim( ABSPATH, '/' ) . $basefolder;
         $url         = $siteurl . $basefolder;
         $basedir     = $dir;
         $baseurl     = $url;
         $subdir      = '';
 
-        if ( get_option( 'uploads_use_yearmonth_folders' ) ) : // test this
+        if ( get_option( 'uploads_use_yearmonth_folders' ) ) : // test this.
             $time   = current_time( 'mysql' );
             $y      = substr( $time, 0, 4 );
             $m      = substr( $time, 5, 2 );
@@ -128,9 +177,9 @@ class DM_Admin {
         $dir .= $subdir;
         $url .= $subdir;
 
-        // create folder if need be //
+        // create folder if need be.
         if ( ! is_dir( $basedir ) ) {
-            mkdir( $basedir, 0700 );
+            wp_mkdir_p( $basedir, 0700 );
         }
 
         return array(
@@ -144,6 +193,13 @@ class DM_Admin {
         );
     }
 
+    /**
+     * Displays a specfic admin page.
+     *
+     * @access public
+     * @param bool $template_name (default: false).
+     * @return html
+     */
     public function get_admin_page( $template_name = false ) {
         if ( ! $template_name ) {
             return false;
