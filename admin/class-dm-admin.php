@@ -92,11 +92,10 @@ class DM_Admin {
         foreach ( $tabs as $tab ) :
             if ( $active_tab === $tab['slug'] ) :
                 $class = 'nav-tab-active';
+                $pagename = $tab['pagename'];
             else :
                 $class = null;
             endif;
-
-            $pagename = $tab['pagename'];
 
             $html .= '<a href="?page=document-manager&tab=' . $tab['slug'] . '" class="nav-tab ' . $class . '">' . $tab['title'] . '</a>';
                 endforeach;
@@ -106,7 +105,7 @@ class DM_Admin {
 
         $html .= '</div>';
 
-        echo esc_html( $html );
+        echo $html;
     }
 
     /**
