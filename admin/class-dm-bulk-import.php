@@ -106,7 +106,7 @@ class DM_Bulk_Import {
             return false;
         }
 
-        $csv_data = $this->process_csv( validate_file( wp_unslash( $_POST['dm_media_filename'] ) ) ); // Input var okay.
+        $csv_data = $this->process_csv( esc_url( wp_unslash( $_POST['dm_media_filename'] ) ) ); // Input var okay.
 
         $this->insert_data_into_posts( $csv_data );
     }
@@ -118,19 +118,13 @@ class DM_Bulk_Import {
      * @param mixed $file_url location of file.
      * @return array
      */
-    protected function process_csv( $file_url ) {
+    protected function process_csv( $file_url ) {       
         $data   = array();
         $header = array( 'title', 'description', 'author', 'categories', 'tags' );
 
-        ini_set( 'auto_detect_line_endings', true ); // added for issues with MAC.
+        if ( false !== ( $handle = fopen( $file_url, 'r' ) ) ) :
 
-        $handle = wp_remote_fopen( $file_url, 'r' );
-
-        if ( false !== $handle ) :
-
-            $row = fgetcsv( $handle, 1000, ',' );
-
-            while ( false !== $row ) :
+            while ( false !== ( $row = fgetcsv( $handle, 1000, ',' ) ) ) :
 
                 $data[] = array_combine( $header, $row );
 
