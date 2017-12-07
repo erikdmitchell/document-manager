@@ -236,4 +236,6 @@ function dm_document_download_link( $id = 0 ) {
 
 function dm_get_document_download_link( $id = 0 ) {
     
+    // check type of post (id) dm_get_document_id(get_the_ID()
+    
 }

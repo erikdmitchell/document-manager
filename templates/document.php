@@ -18,6 +18,8 @@ get_header(); ?>
 	<div class="entry-content">
 		<?php dm_document_description(); ?>
 
+New link: <?php dm_document_download_link(get_the_ID()); ?>
+
         <div class="document">
             <a href="<?php echo wp_get_attachment_url(dm_get_document_id(get_the_ID())); ?>">
                 <?php echo wp_get_attachment_image(dm_get_document_id(get_the_ID()), 'medium'); ?>
