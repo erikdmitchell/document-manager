@@ -29,7 +29,7 @@ class DM_Admin {
         include_once dirname( __FILE__ ) . '/admin-functions.php';
 
         include_once dirname( __FILE__ ) . '/class-dm-bulk-import.php';
-        include_once dirname( __FILE__ ) . '/class-document-upload.php';
+        include_once dirname( __FILE__ ) . '/class-dm-document-upload.php';
     }
 
     /**
