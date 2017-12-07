@@ -66,7 +66,7 @@ class DM_Bulk_Import {
             $html     .= '</div>';
         endforeach;
 
-        echo esc_html( $html );
+        echo $html;
     }
 
     /**
