@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Document Versions Metabox
+ *
+ * @package Document Manager
+ */
+ 
 /**
  * DM_Document_Versions_Metabox class.
  */

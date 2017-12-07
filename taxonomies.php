@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Taxonomies
+ *
+ * @package Document Manager
+ */
+ 
 /**
  * Initialize document tag
  *

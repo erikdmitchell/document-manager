@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Document Upload
+ *
+ * @package Document Manager
+ */
+ 
 /**
  * DM_Document_Upload class.
  */

@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Install
+ *
+ * @package Document Manager
+ */
+ 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }

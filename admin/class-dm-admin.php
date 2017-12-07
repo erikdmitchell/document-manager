@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Document Admin
+ *
+ * @package Document Manager
+ */
+ 
 /**
  * DM_Admin class.
  */
