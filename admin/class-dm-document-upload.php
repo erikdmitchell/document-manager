@@ -258,7 +258,7 @@ class DM_Document_Upload {
         $dirs['subdir'] = '';
         $dirs['path']   = DocumentManager()->settings['uploads']['basedir'];
         $dirs['url']    = DocumentManager()->settings['uploads']['baseurl'];
-
+print_r($dirs);
         return $dirs;
     }
 

@@ -57,7 +57,7 @@ function reloadDocumentVersionMetaBox() {
     var data = {
         'action': 'dm_reload_metabox',
         'post_id': jQuery( '#dm-metabox-post-id' ).val(),
-        'metabox': 'Document_Manager_Document_Versions_Meta_Box',
+        'metabox': 'DM_Document_Versions_Metabox',
     };
 
     jQuery.post(
