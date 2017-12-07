@@ -5,21 +5,26 @@
 
 	<description>Document Manager PHP_CodeSniffer ruleset.</description>
 
-	<!-- Exclude paths -->
-	<exclude-pattern>*/node_modules/*</exclude-pattern>
-	<exclude-pattern>*/vendor/*</exclude-pattern>
-
 	<!-- Configs -->
 	<config name="minimum_supported_wp_version" value="5.2" />
 	<config name="testVersion" value="7.1-"/>
 
+    <!-- Include file/paths -->
+    <file>./</file>
+    
+	<!-- Exclude paths -->
+	<exclude-pattern>templates/</exclude-pattern>
+    <exclude-pattern>updater/</exclude-pattern>	  
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>    
+
 	<!-- Rules -->
 	<rule ref="PHPCompatibility"/>
-	<rule ref="WordPress-Core" />
-	<rule ref="WordPress-Docs" />
 
 	<rule ref="WordPress">
 		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent" />
+		<exclude name="WordPress.VIP.PostsPerPage.posts_per_page_posts_per_page" />
+		<exclude name="WordPress.VIP.DirectDatabaseQuery.NoCaching" />
 	</rule>
 
     <rule ref="Generic.WhiteSpace.ScopeIndent">
