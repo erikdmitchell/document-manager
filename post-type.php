@@ -4,7 +4,7 @@
  *
  * @package Document Manager
  */
- 
+
 /**
  * Init document post type
  *

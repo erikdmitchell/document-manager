@@ -4,7 +4,7 @@
  *
  * @package Document Manager
  */
- 
+
 /**
  * DM_Admin class.
  */
@@ -120,7 +120,7 @@ class DM_Admin {
     public function ajax_reload_metabox() {
         $metabox = wp_unslash( $_POST['metabox'] ); // Input var okay.
         $mb      = new $metabox();
-        $post    = get_post( wp_unslash( $_POST['post_id'] ) ); // Input var okay.
+        $post    = get_post( ( wp_unslash( $_POST['post_id'] ) ); // Input var okay.
 
         echo esc_html( $mb->render_metabox( $post ) );
 
@@ -134,7 +134,7 @@ class DM_Admin {
      * @return void
      */
     public function update_settings() {
-        if ( ! isset( $_POST['dm_admin_update'] ) || ! wp_verify_nonce( wp_unslash( $_POST['dm_admin_update'] ), 'update_settings' ) ) { // Input var okay.
+        if ( ! isset( $_POST['dm_admin_update'] ) || ! wp_verify_nonce( sanitize_key( $_POST['dm_admin_update'] ), 'update_settings' ) ) { // Input var okay.
             return;
         }
 

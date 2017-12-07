@@ -4,7 +4,7 @@
  *
  * @package Document Manager
  */
- 
+
 /**
  * Initialize document tag
  *

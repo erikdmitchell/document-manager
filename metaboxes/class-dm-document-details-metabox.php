@@ -4,7 +4,7 @@
  *
  * @package Document Manager
  */
- 
+
 /**
  * DM_Document_Details_Metabox class.
  */

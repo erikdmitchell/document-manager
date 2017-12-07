@@ -143,14 +143,16 @@ function dm_get_document_url( $post_id = 0 ) {
 
     $version = dm_get_file_version( $post_id );
 
-    $id = $wpdb->get_var( $wpdb->prepare(
-        "
+    $id = $wpdb->get_var(
+        $wpdb->prepare(
+            "
 		SELECT wp_postmeta.post_id
 		FROM $wpdb->posts
 		LEFT JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id
 		WHERE post_parent = %d AND $wpdb->postmeta.meta_key = '_dm_document_version_number' AND $wpdb->postmeta.meta_value = %d
 	", $post_id, $version
-    ) );
+        )
+    );
 
     return get_permalink( $id );
 }
@@ -167,14 +169,16 @@ function dm_get_document_id( $post_id = 0 ) {
 
     $version = dm_get_file_version( $post_id );
 
-    $id = $wpdb->get_var( $wpdb->prepare(
-        "
+    $id = $wpdb->get_var(
+        $wpdb->prepare(
+            "
 		SELECT wp_postmeta.post_id
 		FROM $wpdb->posts
 		LEFT JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id
 		WHERE post_parent = %d AND $wpdb->postmeta.meta_key = '_dm_document_version_number' AND $wpdb->postmeta.meta_value = %d
 	", $post_id, $version
-    ) );
+        )
+    );
 
     return $id;
 }
