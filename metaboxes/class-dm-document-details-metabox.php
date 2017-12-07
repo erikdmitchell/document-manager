@@ -77,7 +77,7 @@ class DM_Document_Details_Metabox {
 
         $html .= '<input type="hidden" name="dmmetabox[post_id]" id="dm-metabox-post-id" value="' . $post->ID . '" />';
 
-        echo esc_html( $html );
+        echo $html;
     }
 
     /**
