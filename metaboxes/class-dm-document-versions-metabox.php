@@ -1,7 +1,16 @@
 <?php
 
-class Document_Manager_Document_Versions_Meta_Box {
+/**
+ * DM_Document_Versions_Metabox class.
+ */
+class DM_Document_Versions_Metabox {
 
+    /**
+     * Construct
+     *
+     * @access public
+     * @return void
+     */
     public function __construct() {
         if ( is_admin() ) :
             add_action( 'load-post.php', array( $this, 'init_metabox' ) );
@@ -9,11 +18,23 @@ class Document_Manager_Document_Versions_Meta_Box {
         endif;
     }
 
+    /**
+     * Initialize metabox.
+     *
+     * @access public
+     * @return void
+     */
     public function init_metabox() {
         add_action( 'add_meta_boxes', array( $this, 'add_metabox' ) );
-        add_action( 'save_post', array( $this, 'save_metabox' ), 10, 2 ); // may not need since this is auto generated
+        add_action( 'save_post', array( $this, 'save_metabox' ), 10, 2 ); // may not need since this is auto generated.
     }
 
+    /**
+     * Add metabox.
+     *
+     * @access public
+     * @return void
+     */
     public function add_metabox() {
         add_meta_box(
             'dm-document-versions',
@@ -26,16 +47,23 @@ class Document_Manager_Document_Versions_Meta_Box {
 
     }
 
+    /**
+     * Render metabox.
+     *
+     * @access public
+     * @param mixed $post post object.
+     * @return void
+     */
     public function render_metabox( $post ) {
         $html  = '';
         $files = get_children(
             array(
-                'post_parent'    => $post->ID,
-                'post_type'      => 'attachment',
-                // 'post_mime_type' => 'image',
-                'posts_per_page' => -1,
-                'orderby'        => 'menu_order',
-                'order'          => 'ASC',
+                'post_parent'      => $post->ID,
+                'post_type'        => 'attachment',
+                'posts_per_page'   => -1,
+                'orderby'          => 'menu_order',
+                'order'            => 'ASC',
+                'suppress_filters' => false,
             )
         );
 
@@ -63,20 +91,20 @@ class Document_Manager_Document_Versions_Meta_Box {
 
         $html .= '<input type="hidden" name="dmmetabox[post_id]" id="dm-metabox-post-id" value="' . $post->ID . '" />';
 
-        echo $html;
+        echo esc_html( $html );
     }
 
+    /**
+     * Save metabox data.
+     *
+     * @access public
+     * @param mixed $post_id post id.
+     * @param mixed $post post object.
+     * @return void
+     */
     public function save_metabox( $post_id, $post ) {
-        $nonce_name   = isset( $_POST['dm_meta_box'] ) ? $_POST['dm_meta_box'] : '';
-        $nonce_action = 'update_document_details';
-
         // Check if nonce is set.
-        if ( ! isset( $nonce_name ) ) {
-            return;
-        }
-
-        // Check if nonce is valid.
-        if ( ! wp_verify_nonce( $nonce_name, $nonce_action ) ) {
+        if ( ! isset( $_POST['dm_meta_box'] ) || ! wp_verify_nonce( wp_unslash( $_POST['dm_meta_box'] ), update_document_details ) ) {
             return;
         }
 

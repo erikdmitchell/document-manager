@@ -1,7 +1,16 @@
 <?php
 
-class Document_Manager_Document_Details_Meta_Box {
+/**
+ * DM_Document_Details_Metabox class.
+ */
+class DM_Document_Details_Metabox {
 
+    /**
+     * Construct function.
+     *
+     * @access public
+     * @return void
+     */
     public function __construct() {
         if ( is_admin() ) :
             add_action( 'load-post.php', array( $this, 'init_metabox' ) );
@@ -9,11 +18,23 @@ class Document_Manager_Document_Details_Meta_Box {
         endif;
     }
 
+    /**
+     * Initalize metabox function.
+     *
+     * @access public
+     * @return void
+     */
     public function init_metabox() {
         add_action( 'add_meta_boxes', array( $this, 'add_metabox' ) );
         add_action( 'save_post', array( $this, 'save_metabox' ), 10, 2 );
     }
 
+    /**
+     * Add metabox function.
+     *
+     * @access public
+     * @return void
+     */
     public function add_metabox() {
         add_meta_box(
             'dm-document-details',
@@ -26,6 +47,13 @@ class Document_Manager_Document_Details_Meta_Box {
 
     }
 
+    /**
+     * Render metabox function.
+     *
+     * @access public
+     * @param mixed $post post object.
+     * @return void
+     */
     public function render_metabox( $post ) {
         $html = '';
 
@@ -44,20 +72,20 @@ class Document_Manager_Document_Details_Meta_Box {
 
         $html .= '<input type="hidden" name="dmmetabox[post_id]" id="dm-metabox-post-id" value="' . $post->ID . '" />';
 
-        echo $html;
+        echo esc_html( $html );
     }
 
+    /**
+     * Save metabox function.
+     *
+     * @access public
+     * @param mixed $post_id post id.
+     * @param mixed $post post object.
+     * @return void
+     */
     public function save_metabox( $post_id, $post ) {
-        $nonce_name   = isset( $_POST['dm_meta_box'] ) ? $_POST['dm_meta_box'] : '';
-        $nonce_action = 'update_document_details';
-
         // Check if nonce is set.
-        if ( ! isset( $nonce_name ) ) {
-            return;
-        }
-
-        // Check if nonce is valid.
-        if ( ! wp_verify_nonce( $nonce_name, $nonce_action ) ) {
+        if ( ! isset( $_POST['dm_meta_box'] ) || ! wp_verify_nonce( wp_unslash( $_POST['dm_meta_box'] ), 'update_document_details' ) ) {
             return;
         }
 
@@ -76,7 +104,7 @@ class Document_Manager_Document_Details_Meta_Box {
             return;
         }
 
-        update_post_meta( $post_id, '_dm_document_description', $_POST['dmmetabox']['description'] );
+        update_post_meta( $post_id, '_dm_document_description', wp_unslash( $_POST['dmmetabox']['description'] ) );
     }
 }
 
