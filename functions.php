@@ -229,3 +229,11 @@ function dm_document_description() {
 
     echo esc_html( get_post_meta( $post->ID, '_dm_document_description', true ) );
 }
+
+function dm_document_download_link( $id = 0 ) {
+    echo dm_get_document_download_link( $id );
+}
+
+function dm_get_document_download_link( $id = 0 ) {
+    
+}
