@@ -4,17 +4,29 @@
  *
  * @package Document Manager
  */
- 
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class Document_Manager_Install {
+/**
+ * DM_Install class.
+ */
+class DM_Install {
 
+    /**
+     * Updates var
+     *
+     * (default value: array())
+     *
+     * @var array
+     * @access private
+     * @static
+     */
     private static $updates = array();
 
     /**
-     * init function.
+     * Init function.
      *
      * @access public
      * @static
@@ -25,7 +37,7 @@ class Document_Manager_Install {
     }
 
     /**
-     * check_version function.
+     * Check version function.
      *
      * @access public
      * @static
@@ -38,7 +50,7 @@ class Document_Manager_Install {
     }
 
     /**
-     * install function.
+     * Install function.
      *
      * @access public
      * @static
@@ -65,7 +77,7 @@ class Document_Manager_Install {
     }
 
     /**
-     * settings function.
+     * Settings function.
      *
      * @access private
      * @static
@@ -76,14 +88,14 @@ class Document_Manager_Install {
             'uploads' => wp_upload_dir(),
         );
         $default_settings['uploads']['basefolder'] = str_replace( get_option( 'siteurl' ), '', $default_settings['uploads']['baseurl'] );
-        $stored_settings                           = get_option( 'dm_settings', array() ); // in case the plugi nwas previously installed
+        $stored_settings                           = get_option( 'dm_settings', array() ); // in case the plugi nwas previously installed.
         $settings                                  = dm_parse_args( $store_settings, $default_settings );
 
         update_option( 'dm_settings', $settings );
     }
 
     /**
-     * update function.
+     * Update function.
      *
      * @access private
      * @static
@@ -102,18 +114,18 @@ class Document_Manager_Install {
     }
 
     /**
-     * get_update_callbacks function.
+     * Get update callbacks function.
      *
      * @access public
      * @static
-     * @return void
+     * @return array
      */
     public static function get_update_callbacks() {
         return self::$updates;
     }
 
     /**
-     * update_version function.
+     * Update version in db function.
      *
      * @access private
      * @static

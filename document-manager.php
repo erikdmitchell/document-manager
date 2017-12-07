@@ -58,7 +58,7 @@ final class DocumentManager {
     }
 
     public function includes() {
-        include_once DM_PATH . 'install.php';
+        include_once DM_PATH . 'class-dm-install.php';
         include_once DM_PATH . 'post-type.php';
         include_once DM_PATH . 'taxonomies.php';
         include_once DM_PATH . 'functions.php';
