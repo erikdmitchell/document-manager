@@ -231,7 +231,7 @@ function dm_document_description() {
 }
 
 /**
- * dm_document_download_url function.
+ * Display the download url of a document.
  * 
  * @access public
  * @param int $id (default: 0).
@@ -242,7 +242,7 @@ function dm_document_download_url( $id = 0 ) {
 }
 
 /**
- * dm_get_document_download_url function.
+ * Get the download url of a document.
  * 
  * @access public
  * @param int $id (default: 0).
@@ -258,7 +258,7 @@ function dm_get_document_download_url( $id = 0 ) {
 }
 
 /**
- * dm_document_image function.
+ * Displays the document image.
  * 
  * @access public
  * @param int $id (default: 0).
@@ -270,7 +270,7 @@ function dm_document_image( $id = 0, $size = 'medium' ) {
 }
 
 /**
- * dm_get_document_image function.
+ * Gets the document image.
  * 
  * @access public
  * @param int $id (default: 0).
@@ -286,10 +286,23 @@ function dm_get_document_image( $id = 0, $size = 'medium' ) {
     return $image;
 }
 
+/**
+ * Gets the docuement title.
+ * 
+ * @access public
+ * @param int $id (default: 0).
+ * @param string $before (default: '').
+ * @param string $after (default: '').
+ * @return void
+ */
 function dm_get_document_title( $id = 0 , $before='', $after='') {
     $title = get_the_title( wp_get_post_parent_id($id) );
 
     $title = $before.$title.$after;
     
     return $title;
+}
+
+function dm_get_document_stats( $id = 0 ) {
+    
 }

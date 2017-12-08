@@ -189,6 +189,7 @@ class DM_Install {
                 id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
                 post_id BIGINT UNSIGNED NOT NULL,
                 post_title TEXT NOT NULL,
+                doc_id BIGINT UNSIGNED NOT NULL,
                 file_url VARCHAR(255) NOT NULL, 
                 user_ip BINARY(16) NOT NULL,
                 date_time DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',

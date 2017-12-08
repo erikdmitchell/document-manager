@@ -30,6 +30,12 @@ class DM_Document_Download {
         add_action( 'init', array( $this, 'handle_download_via_post' ) );
     }
 
+    /**
+     * Downloads the document.
+     * 
+     * @access public
+     * @return void
+     */
     public function handle_download_via_post() {
         global $wpdb;
         
@@ -59,8 +65,9 @@ class DM_Document_Download {
     	if ($dm_document_download_logging) :
     	    $table = $wpdb->prefix . 'document_manager_downloads';
     	    $data = array(
-    		    'post_id' => $document_id,
+    		    'post_id' => wp_get_post_parent_id($document_id),
                 'post_title' => $document_title,
+                'doc_id' => $document_id,
                 'file_url' => $document_url,
                 'user_ip' => $ipaddress,
                 'date_time' => $date_time,
