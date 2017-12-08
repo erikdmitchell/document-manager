@@ -230,12 +230,58 @@ function dm_document_description() {
     echo esc_html( get_post_meta( $post->ID, '_dm_document_description', true ) );
 }
 
-function dm_document_download_link( $id = 0 ) {
-    echo dm_get_document_download_link( $id );
+/**
+ * dm_document_download_url function.
+ * 
+ * @access public
+ * @param int $id (default: 0).
+ * @return void
+ */
+function dm_document_download_url( $id = 0 ) {
+    echo dm_get_document_download_url( $id );
 }
 
-function dm_get_document_download_link( $id = 0 ) {
+/**
+ * dm_get_document_download_url function.
+ * 
+ * @access public
+ * @param int $id (default: 0).
+ * @return url
+ */
+function dm_get_document_download_url( $id = 0 ) {
+    if ('document' === get_post_type($id))
+        $id = dm_get_document_id( $id );
+        
+    $url = wp_get_attachment_url( $id );
     
-    // check type of post (id) dm_get_document_id(get_the_ID()
+    return $url;
+}
+
+/**
+ * dm_document_image function.
+ * 
+ * @access public
+ * @param int $id (default: 0).
+ * @param string $size (default: 'medium').
+ * @return void
+ */
+function dm_document_image( $id = 0, $size = 'medium' ) {
+    echo dm_get_document_image( $id, $size );
+}
+
+/**
+ * dm_get_document_image function.
+ * 
+ * @access public
+ * @param int $id (default: 0).
+ * @param string $size (default: 'medium').
+ * @return url
+ */
+function dm_get_document_image( $id = 0, $size = 'medium' ) {
+    if ('document' === get_post_type($id))
+        $id = dm_get_document_id( $id );
+        
+    $image = wp_get_attachment_image( $id , $size );
     
+    return $image;
 }
