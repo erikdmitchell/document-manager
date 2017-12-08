@@ -62,7 +62,7 @@ class DM_Document_Download {
     		    'post_id' => $document_id,
                 'post_title' => $document_title,
                 'file_url' => $document_url,
-                'visitor_ip' => $ipaddress,
+                'user_ip' => $ipaddress,
                 'date_time' => $date_time,
                 'user_id' => $userinfo['ID'],
                 'username' => $userinfo['username'],
