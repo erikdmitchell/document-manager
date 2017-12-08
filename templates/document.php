@@ -19,8 +19,8 @@ get_header(); ?>
 		<?php dm_document_description(); ?>
 
         <div class="document">
-            <a href="<?php echo wp_get_attachment_url(dm_get_document_id(get_the_ID())); ?>">
-                <?php echo wp_get_attachment_image(dm_get_document_id(get_the_ID()), 'medium'); ?>
+            <a href="<?php dm_document_download_url(get_the_ID()); ?>">
+                <?php dm_document_image(get_the_ID()); ?>
             </a>
         </div>
 	</div><!-- .entry-content -->
