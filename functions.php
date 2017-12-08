@@ -251,8 +251,8 @@ function dm_document_download_url( $id = 0 ) {
 function dm_get_document_download_url( $id = 0 ) {
     if ('document' === get_post_type($id))
         $id = dm_get_document_id( $id );
-        
-    $url = wp_get_attachment_url( $id );
+    
+    $url = wp_nonce_url(home_url("/?docoument_id=$id"), 'process_download', 'dm_document_download');
     
     return $url;
 }
