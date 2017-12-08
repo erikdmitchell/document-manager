@@ -61,20 +61,13 @@ class DM_Document_Stats_Metabox {
     public function render_metabox( $post ) {
         $html = '';
 
-        $html .= wp_nonce_field( 'update_document_details', 'dm_meta_box', true, false );
-
         $html     .= '<div class="dm-meta-box-row">';
-            $html .= '<label for="dm-metabox-file">Select File to Upload:</label>';
-            $html .= '<input type="file" id="dm-metabox-file" name="dmmetabox[file]" value="" />';
-            $html .= '<a href="" id="dm-metabox-file-upload" class="button button-secondary">Upload</a>';
+
         $html     .= '</div>';
 
         $html     .= '<div class="dm-meta-box-row">';
-            $html .= '<label for="dm-metabox-description">Description</label>';
-            $html .= '<textarea name="dmmetabox[description]" id="dm-metabox-description" class="" placeholder="Document description">' . get_post_meta( $post->ID, '_dm_document_description', true ) . '</textarea>';
-        $html     .= '</div>';
 
-        $html .= '<input type="hidden" name="dmmetabox[post_id]" id="dm-metabox-post-id" value="' . $post->ID . '" />';
+        $html     .= '</div>';
 
         echo $html;
     }
