@@ -303,6 +303,23 @@ function dm_get_document_title( $id = 0 , $before='', $after='') {
     return $title;
 }
 
-function dm_get_document_stats( $id = 0 ) {
+/**
+ * Gets documents stats from db.
+ * 
+ * @access public
+ * @param int $post_id (default: 0)
+ * @return object
+ */
+function dm_get_document_stats( $post_id = 0 ) {
+    global $wpdb;
     
+    $db_results=$wpdb->get_results( $wpdb->prepare(
+            "
+		SELECT *
+		FROM {$wpdb->prefix}document_manager_downloads
+		WHERE post_id = %d
+	", $post_id           
+    ) );
+    
+    return $db_results;
 }
