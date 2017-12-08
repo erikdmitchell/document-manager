@@ -285,3 +285,11 @@ function dm_get_document_image( $id = 0, $size = 'medium' ) {
     
     return $image;
 }
+
+function dm_get_document_title( $id = 0 , $before='', $after='') {
+    $title = get_the_title( wp_get_post_parent_id($id) );
+
+    $title = $before.$title.$after;
+    
+    return $title;
+}
