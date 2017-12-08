@@ -39,30 +39,36 @@ class DM_Document_Download {
         $dm_document_download_logging = true;
         $document_id = absint( $_REQUEST['document_id'] );
         $document_title = dm_get_document_title( $document_id );
+        $document_url = wp_get_attachment_url( $document_id );
         $redirect_url = home_url( $_REQUEST['http_referer'] );
         
         // No document id.
         if (!$document_id)
             return false;
+        
+        // No document url
+        if (empty($document_url))
+            return false;
             
         $ipaddress = $this->get_ip_address();
         $date_time = current_time('mysql');
-        $user_name = $this->get_logged_in_user();
+        $userinfo = $this->get_logged_in_userinfo();
 
         // Log this download (if true).        
     	if ($dm_document_download_logging) :
 
-    	    $table = $wpdb->prefix . 'sdm_downloads';
+    	    //$table = $wpdb->prefix . 'sdm_downloads';
     	    $data = array(
-    		'post_id' => $download_id,
-    		'post_title' => $download_title,
-    		'file_url' => $download_link,
-    		'visitor_ip' => $ipaddress,
-    		'date_time' => $date_time,
-    		'visitor_name' => $visitor_name
-    		'visitor_id' => 
+    		    'post_id' => $document_id,
+                'post_title' => $document_title,
+                'file_url' => $document_url,
+                'visitor_ip' => $ipaddress,
+                'date_time' => $date_time,
+                'user_id' => $userinfo['ID'],
+                'username' => $userinfo['username'],
     	    );
-    
+print_r($data);    
+/*
     	    $data = array_filter($data); // Remove any null values.
     	    $insert_table = $wpdb->insert($table, $data);
     
@@ -72,6 +78,7 @@ class DM_Document_Download {
     		//Failed to log the download request
     		wp_die(__('Error! Failed to log the download request in the database table', 'simple-download-monitor'));
     	    }
+*/
     	endif;
 	
 /*
@@ -122,21 +129,26 @@ class DM_Document_Download {
     }
 
     /**
-     * get_logged_in_user function.
+     * get_logged_in_userinfo function.
      * 
      * @access protected
      * @return void
      */
-    protected function get_logged_in_user() {
-        $visitor_name = 'No User Name';
+    protected function get_logged_in_userinfo() {
+        $userinfo=array(
+            'ID' => 0,
+            'username' => 'No Username',  
+        );
     
          // Get WP user name (if logged in).
         if (is_user_logged_in()) : 
         	$current_user = wp_get_current_user();
-            $visitor_name = $current_user->user_login;
+        	
+        	$userinfo['ID']=$current_user->ID;
+        	$userinfo['username']= $current_user->user_login;
         endif;
 
-        return $visitor_name;
+        return $userinfo;
     }
 
 }
