@@ -252,7 +252,7 @@ function dm_get_document_download_url( $id = 0 ) {
     if ('document' === get_post_type($id))
         $id = dm_get_document_id( $id );
     
-    $url = wp_nonce_url(home_url("/?docoument_id=$id"), 'process_download', 'dm_document_download');
+    $url = wp_nonce_url(home_url("/?document_id=$id&http_referer=" . esc_attr( wp_unslash( $_SERVER['REQUEST_URI'] ) )), 'process_download', 'dm_document_download');
     
     return $url;
 }
