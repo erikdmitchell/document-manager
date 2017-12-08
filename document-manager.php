@@ -136,6 +136,7 @@ final class DocumentManager {
         include_once DM_PATH . 'class-dm-document-url.php';
         include_once DM_PATH . 'class-dm-document-download.php';
         include_once DM_PATH . 'admin/class-dm-admin.php';
+        include_once DM_PATH . 'updater/updater.php';
 
         new DM_Document_URL();
         
@@ -207,8 +208,8 @@ final class DocumentManager {
         }
 
         $username    = 'erikdmitchell';
-        $repo_name   = 'pickle-document-manager';
-        $folder_name = 'pickle-document-manager';
+        $repo_name   = 'document-manager';
+        $folder_name = 'document-manager';
 
         $config = array(
             'slug'               => plugin_basename( __FILE__ ), // this is the slug of your plugin.
