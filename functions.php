@@ -232,94 +232,98 @@ function dm_document_description() {
 
 /**
  * Display the download url of a document.
- * 
+ *
  * @access public
  * @param int $id (default: 0).
  * @return void
  */
 function dm_document_download_url( $id = 0 ) {
-    echo dm_get_document_download_url( $id );
+    echo esc_url( dm_get_document_download_url( $id ) );
 }
 
 /**
  * Get the download url of a document.
- * 
+ *
  * @access public
  * @param int $id (default: 0).
  * @return url
  */
 function dm_get_document_download_url( $id = 0 ) {
-    if ('document' === get_post_type($id))
+    if ( 'document' === get_post_type( $id ) ) {
         $id = dm_get_document_id( $id );
-    
-    $url = wp_nonce_url(home_url("/?document_id=$id&http_referer=" . esc_attr( wp_unslash( $_SERVER['REQUEST_URI'] ) )), 'process_download', 'dm_document_download');
-    
+    }
+
+    $url = wp_nonce_url( home_url( "/?document_id=$id&http_referer=" . esc_attr( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ), 'process_download', 'dm_document_download' );
+
     return $url;
 }
 
 /**
  * Displays the document image.
- * 
+ *
  * @access public
- * @param int $id (default: 0).
+ * @param int    $id (default: 0).
  * @param string $size (default: 'medium').
  * @return void
  */
 function dm_document_image( $id = 0, $size = 'medium' ) {
-    echo dm_get_document_image( $id, $size );
+    echo esc_url( dm_get_document_image( $id, $size ) );
 }
 
 /**
  * Gets the document image.
- * 
+ *
  * @access public
- * @param int $id (default: 0).
+ * @param int    $id (default: 0).
  * @param string $size (default: 'medium').
  * @return url
  */
 function dm_get_document_image( $id = 0, $size = 'medium' ) {
-    if ('document' === get_post_type($id))
+    if ( 'document' === get_post_type( $id ) ) {
         $id = dm_get_document_id( $id );
-        
-    $image = wp_get_attachment_image( $id , $size );
-    
+    }
+
+    $image = wp_get_attachment_image( $id, $size );
+
     return $image;
 }
 
 /**
  * Gets the docuement title.
- * 
+ *
  * @access public
- * @param int $id (default: 0).
+ * @param int    $id (default: 0).
  * @param string $before (default: '').
  * @param string $after (default: '').
- * @return void
+ * @return string
  */
-function dm_get_document_title( $id = 0 , $before='', $after='') {
-    $title = get_the_title( wp_get_post_parent_id($id) );
+function dm_get_document_title( $id = 0, $before = '', $after = '' ) {
+    $title = get_the_title( wp_get_post_parent_id( $id ) );
 
-    $title = $before.$title.$after;
-    
+    $title = $before . $title . $after;
+
     return $title;
 }
 
 /**
  * Gets documents stats from db.
- * 
+ *
  * @access public
- * @param int $post_id (default: 0)
+ * @param int $post_id (default: 0).
  * @return object
  */
 function dm_get_document_stats( $post_id = 0 ) {
     global $wpdb;
-    
-    $db_results=$wpdb->get_results( $wpdb->prepare(
+
+    $db_results = $wpdb->get_results(
+        $wpdb->prepare(
             "
 		SELECT *
 		FROM {$wpdb->prefix}document_manager_downloads
 		WHERE post_id = %d
-	", $post_id           
-    ) );
-    
+	", $post_id
+        )
+    );
+
     return $db_results;
 }

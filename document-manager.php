@@ -139,7 +139,7 @@ final class DocumentManager {
         include_once DM_PATH . 'updater/updater.php';
 
         new DM_Document_URL();
-        
+
         new DM_Document_Download();
 
         if ( is_admin() ) :
