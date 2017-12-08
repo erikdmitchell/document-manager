@@ -37,6 +37,7 @@ class DM_Document_Download {
             return;
         
         $dm_document_download_logging = true;
+        $dispatch = true;
         $document_id = absint( $_REQUEST['document_id'] );
         $document_title = dm_get_document_title( $document_id );
         $document_url = wp_get_attachment_url( $document_id );
@@ -56,8 +57,7 @@ class DM_Document_Download {
 
         // Log this download (if true).        
     	if ($dm_document_download_logging) :
-
-    	    //$table = $wpdb->prefix . 'sdm_downloads';
+    	    $table = $wpdb->prefix . 'document_manager_downloads';
     	    $data = array(
     		    'post_id' => $document_id,
                 'post_title' => $document_title,
@@ -67,40 +67,28 @@ class DM_Document_Download {
                 'user_id' => $userinfo['ID'],
                 'username' => $userinfo['username'],
     	    );
-print_r($data);    
-/*
+
     	    $data = array_filter($data); // Remove any null values.
     	    $insert_table = $wpdb->insert($table, $data);
     
-    	    if ($insert_table) {
-    		//Download request was logged successfully
-    	    } else {
-    		//Failed to log the download request
-    		wp_die(__('Error! Failed to log the download request in the database table', 'simple-download-monitor'));
-    	    }
-*/
+            // check table failed to insert.
+    	    if (!$insert_table) :
+        	    return false;
+            endif;
+
     	endif;
 	
-/*
-	// Allow plugin extensions to hook into download request.
-	do_action('sdm_process_download_request', $download_id, $download_link);
+        // Only local file can be dispatched.
+        if ($dispatch && (stripos($document_url, WP_CONTENT_URL) === 0)) :
+    	    // Get file path.
+            $file = path_join(WP_CONTENT_DIR, ltrim(substr($document_url, strlen(WP_CONTENT_URL)), '/'));
+            
+            // Try to dispatch file (terminates script execution on success)
+            $this->dispatch_file($file);
+        endif;
 
-	// Should the item be dispatched?
-	$dispatch = apply_filters('sdm_dispatch_downloads', get_post_meta($download_id, 'sdm_item_dispatch', true));
-
-	// Only local file can be dispatched.
-	if ($dispatch && (stripos($download_link, WP_CONTENT_URL) === 0)) {
-	    // Get file path
-	    $file = path_join(WP_CONTENT_DIR, ltrim(substr($download_link, strlen(WP_CONTENT_URL)), '/'));
-	    // Try to dispatch file (terminates script execution on success)
-	    sdm_dispatch_file($file);
-	}
-
-	// As a fallback or when dispatching is disabled, redirect to the file
-	// (and terminate script execution).
-	sdm_redirect_to_url($download_link);
-*/	        
-  
+    	// As a fallback or when dispatching is disabled, redirect to the file (and terminate script execution).
+    	$this->redirect_to_url($document_url);
     }
     
     /**
@@ -151,4 +139,66 @@ print_r($data);
         return $userinfo;
     }
 
+    /**
+     * Force download of the file.
+     * 
+     * @access protected
+     * @param mixed $filename
+     * @return void
+     */
+    protected function dispatch_file($filename) {
+    
+        if (headers_sent()) {
+        	trigger_error(__FUNCTION__ . ": Cannot dispatch file $filename, headers already sent.");
+            
+            return;
+        }
+    
+        if (!is_readable($filename)) {
+    	    trigger_error(__FUNCTION__ . ": Cannot dispatch file $filename, file is not readable.");
+            
+            return;
+        }
+    
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream'); // http://stackoverflow.com/a/20509354
+        header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($filename));
+    
+        ob_end_clean();
+        readfile($filename);
+        exit;
+    }
+
+    /**
+     * Redirect to specific url.
+     * 
+     * @access protected
+     * @param mixed $url
+     * @param string $delay (default: '0')
+     * @param string $exit (default: '1')
+     * @return void
+     */
+    protected function redirect_to_url($url, $delay = '0', $exit = '1') {        
+        if (empty($url)) :
+    	    echo '<strong>';
+                _e('Error! The URL value is empty. Please specify a correct URL value to redirect to!', 'simple-download-monitor');
+            echo '</strong>';
+            
+            exit;
+        endif;
+        
+        if (!headers_sent()) :
+    	    header('Location: ' . $url);
+        else :
+        	echo '<meta http-equiv="refresh" content="' . $delay . ';url=' . $url . '" />';
+        endif;
+        
+        if ($exit == '1') :
+        	exit;
+        endif;
+    }
 }
