@@ -18,7 +18,8 @@
 .dm-meta-box-row:last-child {
     margin-bottom: 0;
 }
-.dm-meta-box-row label {
+.dm-meta-box-row label,
+.dm-meta-box-row.header {
     font-weight: bold;
 }
 .dm-meta-box-row textarea {
@@ -65,6 +66,31 @@
     width: 15%
 }
 
+/* stats */
+.dm-document-stats-metabox {
+    overflow: hidden;
+    margin-bottom: 3px;    
+}
+.dm-document-stats-metabox .dm-meta-box-row {
+    overflow: hidden;
+}
+.dm-document-stats-metabox .dm-meta-box-row:nth-child(even) {
+    background: #f1f1f1;
+}
+.dm-document-stats-metabox .dm-meta-box-row > div {
+    float: left;
+    margin-right: 2%;
+    padding: 2%;    
+}
+.dm-document-stats-metabox .dm-meta-box-row .doc-name {
+    width: 57%;
+}
+.dm-document-stats-metabox .dm-meta-box-row .user-name {
+    width: 12%;
+}
+.dm-document-stats-metabox .dm-meta-box-row .user-ip {
+    width: 13%;   
+}
 
 /* admin loader */
 .loader-image-container {

@@ -60,15 +60,33 @@ class DM_Document_Stats_Metabox {
      */
     public function render_metabox( $post ) {
         $html = '';
+        $stats = dm_get_document_stats( $post->ID );
+        
+        $html.='<div class="dm-document-stats-metabox">';
 
-        $html     .= '<div class="dm-meta-box-row">';
+            if (empty($stats)) :
+            
+                $html.='No downloads yet.';
+                
+            else :
+                $html     .= '<div class="dm-meta-box-row header">';
+                    $html.='<div class="doc-name">Name</div>';
+                    $html.='<div class="user-name">Username</div>';
+                    $html.='<div class="user-ip">IP Address</div>';
+                $html     .= '</div>';
+                
+                foreach ($stats as $row) :
+                    $html     .= '<div class="dm-meta-box-row">';
+                        $html.='<div class="doc-name">'.get_the_title($row->doc_id).'</div>';
+                        $html.='<div class="user-name">'.$row->username.'</div>';
+                        $html.='<div class="user-ip">'.$row->user_ip.'</div>';
+                    $html     .= '</div>';           
+                endforeach;
+    
+            endif;
 
-        $html     .= '</div>';
-
-        $html     .= '<div class="dm-meta-box-row">';
-
-        $html     .= '</div>';
-
+        $html.='</div>';
+        
         echo $html;
     }
 
