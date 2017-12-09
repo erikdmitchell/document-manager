@@ -30,19 +30,7 @@ function notifyLiveReload(event) {
 	livereload.changed(fileName);
 }
 
-// Default gulp task
-gulp.task('default', function() {
-  console.log('Good Day!');
-});
-
-// Tasks to run on watch/reload EDIT
-gulp.task('watch', ['sass'], function() {		
-	livereload.listen();
-	gulp.watch('sass/**/*.scss', ['sass']);
-	gulp.watch('sass/**/*.sass', ['sass']);
-});
-
-
+// build out dirs
 var dirs = {
     css: 'assets/css',
     images: 'assetts/images',
@@ -140,4 +128,16 @@ gulp.task('phpcs', function () {
             warningSeverity: 0
         }))
         .pipe(phpcs.reporter('log')); // Log all problems that was found
+});
+
+// Tasks to run on watch/reload EDIT
+gulp.task('watch', ['sass'], function() {		
+	livereload.listen();
+	gulp.watch('sass/**/*.scss', ['sass']);
+	gulp.watch('sass/**/*.sass', ['sass']);
+});
+
+// Default gulp task
+gulp.task('default', function() {
+  console.log('Good Day!');
 });
