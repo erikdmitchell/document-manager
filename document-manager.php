@@ -224,7 +224,7 @@ final class DocumentManager {
             'readme'             => 'readme.txt', // which file to use as the readme for the version number.
         );
 
-        new WP_GitHub_Updater( $config );
+        new DM_GitHub_Updater( $config );
     }
 
 }
