@@ -1,6 +1,7 @@
 var gulp = require('gulp'); // gulp
 var jshint = require('gulp-jshint'); // JSHint plugin
 var stylish = require('jshint-stylish'); // JSHint Stylish plugin
+var stylelint = require('gulp-stylelint'); // stylelint plugin
 
 // var sass = require('gulp-sass'); // sass
 // var gutil = require('gulp-util'); // ultitly
@@ -55,43 +56,33 @@ gulp.task('watch', ['sass'], function() {
 });
 
 
-		// Setting folder templates.
-		dirs: {
-			css: 'assets/css',
-			fonts: 'assets/fonts',
-			images: 'assets/images',
-			js: 'assets/js'
-		},
+var dirs = {
+    css: 'assets/css',
+    images: 'assetts/images',
+    js: 'assets/js',
+    admin: 'admin'  
+};
 
-
+// JavaScript linting with JSHint.
 gulp.task('lint', function() {
-  return gulp.src('./lib/*.js')
+  return gulp.src(dirs.admin + '/js/*.js')
     .pipe(jshint())
     .pipe(jshint.reporter(stylish));
 });
 
-			all: [
-				'Gruntfile.js',
-				'<%= dirs.js %>/admin/*.js',
-				'!<%= dirs.js %>/admin/*.min.js',
-				'<%= dirs.js %>/frontend/*.js',
-				'!<%= dirs.js %>/frontend/*.min.js',
-				'includes/gateways/simplify-commerce/assets/js/*.js',
-				'!includes/gateways/simplify-commerce/assets/js/*.min.js'
-			]
+// Sass linting with Stylelint.
+gulp.task('lint-css', function lintCssTask() {
+  return gulp.src(dirs.admin + '/css/*.css')
+    .pipe(gulpStylelint({
+      reporters: [
+        {formatter: 'string', console: true}
+      ]
+    }));
+});			
 /*
-
-
-		// Sass linting with Stylelint.
-		stylelint: {
-			options: {
-				configFile: '.stylelintrc'
-			},
-			all: [
-				'<%= dirs.css %>/*.scss',
-				'!<%= dirs.css %>/select2.scss'
-			]
-		},
+  
+*/			
+/*
 
 		// Minify .js files.
 		uglify: {
