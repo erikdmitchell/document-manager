@@ -4,10 +4,12 @@ var stylish = require('jshint-stylish'); // JSHint Stylish plugin
 var stylelint = require('gulp-stylelint'); // stylelint plugin
 var uglify = require('gulp-uglify'); // uglify js plugin
 var pump = require('pump'); // gulp pump
+var cssnano = require('gulp-cssnano'); // minify css
+var sourcemaps = require('gulp-sourcemaps'); // use sourcemaps for css
 
 // var sass = require('gulp-sass'); // sass
-// var gutil = require('gulp-util'); // ultitly
-// var livereload = require('gulp-livereload'); // auto reload
+var gutil = require('gulp-util'); // ultitly
+var livereload = require('gulp-livereload'); // auto reload
 // var autoprefixer = require('autoprefixer'); // adds browser prefixes
 // var cssdeclsort = require('css-declaration-sorter'); // orders our css within the class/id
 // var plumber = require('gulp-plumber'); // Prevent pipe breaking caused by errors from gulp plugins
@@ -49,14 +51,14 @@ var dirs = {
 };
 
 // JavaScript linting with JSHint.
-gulp.task('lint', function() {
+gulp.task('lintjs', function() {
   return gulp.src(dirs.admin + '/js/*.js')
     .pipe(jshint())
     .pipe(jshint.reporter(stylish));
 });
 
 // Sass linting with Stylelint.
-gulp.task('lint-css', function lintCssTask() {
+gulp.task('lintcss', function lintCssTask() {
   return gulp.src(dirs.admin + '/css/*.css')
     .pipe(gulpStylelint({
       reporters: [
@@ -66,11 +68,11 @@ gulp.task('lint-css', function lintCssTask() {
 });			
 
 // Minify .js files.
-gulp.task('compress', function (cb) {
+gulp.task('minjs', function (cb) {
   pump([
         gulp.src(dirs.admin + '/js/*.js'),
         uglify(),
-        gulp.dest(dirs.admin + '/js')
+        gulp.dest(dirs.admin + '/js/')
     ],
     cb
   );
@@ -93,48 +95,7 @@ gulp.task('sass', function() {
 });
 */
 
-			
 /*
-
-		
-		uglify: {
-			options: {
-				ie8: true,
-				parse: {
-					strict: false
-				},
-				output: {
-					comments : /@license|@preserve|^!/
-				}
-			},
-			admin: {
-				files: [{
-					expand: true,
-					cwd: '<%= dirs.js %>/admin/',
-					src: [
-						'*.js',
-						'!*.min.js'
-					],
-					dest: '<%= dirs.js %>/admin/',
-					ext: '.min.js'
-				}]
-			},
-			frontend: {
-				files: [{
-					expand: true,
-					cwd: '<%= dirs.js %>/frontend/',
-					src: [
-						'*.js',
-						'!*.min.js'
-					],
-					dest: '<%= dirs.js %>/frontend/',
-					ext: '.min.js'
-				}]
-			},
-		},
-
-
-
 		// Generate RTL .css files
 		rtlcss: {
 			woocommerce: {
@@ -149,27 +110,26 @@ gulp.task('sass', function() {
 				ext: '-rtl.css'
 			}
 		},
+*/    
 
-		// Minify all .css files.
-		cssmin: {
-			minify: {
-				expand: true,
-				cwd: '<%= dirs.css %>/',
-				src: ['*.css'],
-				dest: '<%= dirs.css %>/',
-				ext: '.css'
-			}
-		},
+// Minify all .css files.
+gulp.task('mincss', function () {
+    return gulp.src(dirs.admin + '/css/*.css')
+        .pipe(sourcemaps.init())
+        .pipe(cssnano())
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(dirs.admin + '/css'));
+});
+			
+/*
 
-		// Concatenate select2.css onto the admin.css files.
-		concat: {
-			admin: {
-				files: {
-					'<%= dirs.css %>/admin.css' : ['<%= dirs.css %>/select2.css', '<%= dirs.css %>/admin.css'],
-					'<%= dirs.css %>/admin-rtl.css' : ['<%= dirs.css %>/select2.css', '<%= dirs.css %>/admin-rtl.css']
-				}
-			}
-		},
+		
+
+
+
+
+
+
 
 		// Watch changes for assets.
 		watch: {
