@@ -113,14 +113,14 @@ gulp.task('mincss', function () {
 // Check textdomain errors.
 	
 // PHP Code Sniffer.
-var phpcsSrc = {
+var phpcsSrc = [
     '**/*.php', // Include all files    
     '!node_modules/**', // Exclude node_modules/
 	'!vendor/**' // Exclude vendor/    
-};
+];
 
 gulp.task('phpcs', function () {
-    return gulp.src(['src/**/*.php', '!src/vendor/**/*.*'])
+    return gulp.src(phpcsSrc)
         // Validate files using PHP Code Sniffer
         .pipe(phpcs({
             bin: 'vendor/bin/phpcs',
