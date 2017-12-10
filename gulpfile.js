@@ -141,3 +141,12 @@ gulp.task('watch', ['sass'], function() {
 gulp.task('default', function() {
   console.log('Good Day!');
 });
+
+/*
+'lintjs'
+'lintcss'
+'minjs'
+'sass'
+'mincss'
+'phpcs'
+*/
