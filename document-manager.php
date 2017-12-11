@@ -30,8 +30,6 @@ final class DocumentManager {
     /**
      * Document Manager version
      *
-     * (default value: '1.0.0-alpha')
-     *
      * @var string
      * @access public
      */
@@ -39,8 +37,6 @@ final class DocumentManager {
 
     /**
      * Document Manager Admin class variable
-     *
-     * (default value: '')
      *
      * @var string
      * @access public
@@ -50,8 +46,6 @@ final class DocumentManager {
     /**
      * Document Manager settings
      *
-     * (default value: '')
-     *
      * @var string
      * @access public
      */
@@ -59,8 +53,6 @@ final class DocumentManager {
 
     /**
      * Instance
-     *
-     * (default value: null)
      *
      * @var mixed
      * @access protected
