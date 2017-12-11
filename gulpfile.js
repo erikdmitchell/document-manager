@@ -103,6 +103,7 @@ gulp.task('mincss', function () {
         .pipe(sourcemaps.init())
         .pipe(cssnano())
         .pipe(sourcemaps.write('.'))
+        .pipe(rename({ suffix: '.min' }))         
         .pipe(gulp.dest(dirs.admin + '/css'));
 });
 			
