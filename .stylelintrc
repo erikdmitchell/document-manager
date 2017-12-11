@@ -1,6 +1,6 @@
 {
   "rules": {
-    "indentation": "tab",
+    "indentation": "4",
     "color-hex-case": "lower",
     "color-no-invalid-hex": true,
 
