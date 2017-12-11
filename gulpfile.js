@@ -48,7 +48,7 @@ gulp.task('lintjs', function() {
 // Sass linting with Stylelint.
 gulp.task('lintcss', function lintCssTask() {
   return gulp.src(dirs.admin + '/css/*.css')
-    .pipe(gulpStylelint({
+    .pipe(stylelint({
       reporters: [
         {formatter: 'string', console: true}
       ]
