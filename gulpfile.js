@@ -56,14 +56,11 @@ gulp.task('lintcss', function lintCssTask() {
 });			
 
 // Minify .js files.
-gulp.task('minjs', function (cb) {
-  pump([
-        gulp.src(dirs.admin + '/js/*.js'),
-        uglify(),
-        gulp.dest(dirs.admin + '/js/')
-    ],
-    cb
-  );
+gulp.task('minjs', function() {
+  return gulp.src(dirs.admin + '/js/*.js')
+    .pipe(uglify())
+    .pipe(rename({ suffix: '.min' }))    
+    .pipe(gulp.dest(dirs.admin + '/js/'));
 });
 
 // Gulps our style file EDIT
