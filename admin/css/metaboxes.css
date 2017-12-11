@@ -29,14 +29,11 @@
 }
 
 /* file list */
-.dm-meta-box-file-list {
-
-}
 .dm-meta-box-file {
     overflow: hidden;
     margin-bottom: 3px;
 }
-.dm-meta-box-file:nth-child(even) {
+.dm-meta-box-file:nth-child( even ) {
     background: #fff;
 }
 .dm-meta-box-file.header {
@@ -60,27 +57,27 @@
     width: 10%;
 }
 .dm-meta-box-file .file-version {
-    width: 8%
+    width: 8%;
 }
 .dm-meta-box-file .file-action {
-    width: 15%
+    width: 15%;
 }
 
 /* stats */
 .dm-document-stats-metabox {
     overflow: hidden;
-    margin-bottom: 3px;    
+    margin-bottom: 3px;
 }
 .dm-document-stats-metabox .dm-meta-box-row {
     overflow: hidden;
 }
-.dm-document-stats-metabox .dm-meta-box-row:nth-child(even) {
+.dm-document-stats-metabox .dm-meta-box-row:nth-child( even ) {
     background: #f1f1f1;
 }
 .dm-document-stats-metabox .dm-meta-box-row > div {
     float: left;
     margin-right: 2%;
-    padding: 2%;    
+    padding: 2%;
 }
 .dm-document-stats-metabox .dm-meta-box-row .doc-name {
     width: 57%;
@@ -89,7 +86,7 @@
     width: 12%;
 }
 .dm-document-stats-metabox .dm-meta-box-row .user-ip {
-    width: 13%;   
+    width: 13%;
 }
 
 /* admin loader */
@@ -99,7 +96,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(204, 204, 204, 0.70);
+    background: rgba(204, 204, 204, 0.7);
     display: none;
 }
 .loader-image-container .loader-image {
