@@ -1,83 +1,106 @@
 #dm-document-details,
 #dm-document-versions {
-	border: none;
-	box-shadow: none;
-	background: transparent;
+    border: none;
+    box-shadow: none;
+    background: transparent;
 }
 #dm-document-details button.handlediv,
 #dm-document-details h2.hndle,
 #dm-document-versions button.handlediv,
 #dm-document-versions h2.hndle {
-	display: none;
+    display: none;
 }
 
 /* general mb styles */
 .dm-meta-box-row {
-	margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 .dm-meta-box-row:last-child {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
-.dm-meta-box-row label {
-	font-weight: bold;
+.dm-meta-box-row label,
+.dm-meta-box-row.header {
+    font-weight: bold;
 }
 .dm-meta-box-row textarea {
-	width: 100%;
-	height: 175px;
-	margin-top: 10px;
+    width: 100%;
+    height: 175px;
+    margin-top: 10px;
 }
 
 /* file list */
- .dm-meta-box-file-list {
-	 
- }
 .dm-meta-box-file {
-	overflow: hidden;
-	margin-bottom: 3px;
+    overflow: hidden;
+    margin-bottom: 3px;
 }
-.dm-meta-box-file:nth-child(even) {
-	background: #fff;
+.dm-meta-box-file:nth-child( even ) {
+    background: #fff;
 }
 .dm-meta-box-file.header {
-	font-weight: bold;
+    font-weight: bold;
 }
 .dm-meta-box-file > div {
-	float: left;
-	margin-right: 2%;
-	padding: 2%;
+    float: left;
+    margin-right: 2%;
+    padding: 2%;
 }
 .dm-meta-box-file > div:last-child {
-	margin-right: 0;
+    margin-right: 0;
 }
 .dm-meta-box-file .file-name {
-	width: 33%;
+    width: 33%;
 }
 .dm-meta-box-file .file-type {
-	width: 6%;
+    width: 6%;
 }
 .dm-meta-box-file .file-size {
-	width: 10%;
+    width: 10%;
 }
 .dm-meta-box-file .file-version {
-	width: 8%
+    width: 8%;
 }
 .dm-meta-box-file .file-action {
-	width: 15%
-}										
-			
+    width: 15%;
+}
+
+/* stats */
+.dm-document-stats-metabox {
+    overflow: hidden;
+    margin-bottom: 3px;
+}
+.dm-document-stats-metabox .dm-meta-box-row {
+    overflow: hidden;
+}
+.dm-document-stats-metabox .dm-meta-box-row:nth-child( even ) {
+    background: #f1f1f1;
+}
+.dm-document-stats-metabox .dm-meta-box-row > div {
+    float: left;
+    margin-right: 2%;
+    padding: 2%;
+}
+.dm-document-stats-metabox .dm-meta-box-row .doc-name {
+    width: 57%;
+}
+.dm-document-stats-metabox .dm-meta-box-row .user-name {
+    width: 12%;
+}
+.dm-document-stats-metabox .dm-meta-box-row .user-ip {
+    width: 13%;
+}
 
 /* admin loader */
 .loader-image-container {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	background: rgba(204, 204, 204, 0.70);
-	display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(204, 204, 204, 0.7);
+    display: none;
 }
 .loader-image-container .loader-image {
-	position: absolute;
-	top: 50%;
-	left: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
